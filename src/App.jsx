@@ -608,6 +608,8 @@ function App() {
       )}
 
       {after_six_month_calculations.length != 0 &&
+      <>
+      <div className='text-white text-[27px] font-bold'> BNI Capital Business Alliance</div>
         <div className="min-h-screen bg-red-700 p-6 w-full">
           <div className="bg-white w-full rounded-2xl p-6 shadow-lg">
             {/* Top bar */}
@@ -764,7 +766,7 @@ function App() {
                             name="present"
                             value={formData.present}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             max="5"
                             readOnly={editable}
@@ -785,7 +787,7 @@ function App() {
                             name="rgo"
                             value={formData.rgo}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -810,7 +812,7 @@ function App() {
                             name="rgi"
                             value={formData.rgi}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -835,7 +837,7 @@ function App() {
                             name="one2ones"
                             value={formData.one2ones}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -856,7 +858,7 @@ function App() {
                             name="ceu"
                             value={formData.ceus}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -877,7 +879,7 @@ function App() {
                             name="Visitors"
                             value={formData.visitors}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -973,7 +975,7 @@ function App() {
                             name="present"
                             value={formData.present}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             max="5"
                             readOnly={editable}
@@ -991,7 +993,7 @@ function App() {
                             name="rgo"
                             value={formData.rgo}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1012,7 +1014,7 @@ function App() {
                             name="rgi"
                             value={formData.rgi}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1037,7 +1039,7 @@ function App() {
                             name="one2ones"
                             value={formData.one2ones}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1059,7 +1061,7 @@ function App() {
                             name="ceu"
                             value={formData.ceus}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1081,7 +1083,7 @@ function App() {
                             name="Visitors"
                             value={formData.visitors}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1193,7 +1195,7 @@ function App() {
                             name="present"
                             value={formData.present}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             max="5"
                             readOnly={editable}
@@ -1211,7 +1213,7 @@ function App() {
                             name="rgo"
                             value={formData.rgo}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1232,7 +1234,7 @@ function App() {
                             name="rgi"
                             value={formData.rgi}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1256,7 +1258,7 @@ function App() {
                             name="one2ones"
                             value={formData.one2ones}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1277,7 +1279,7 @@ function App() {
                             name="ceu"
                             value={formData.ceus}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1298,7 +1300,7 @@ function App() {
                             name="Visitors"
                             value={formData.visitors}
                             onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                             min="0"
                             readOnly={editable}
                           />
@@ -1380,7 +1382,8 @@ function App() {
             </div>
           )}
 
-        </div>}
+        </div>
+        </>}
 
 
       <ModalWithLoader isOpen={modalOpen} onClose={() => setModalOpen(false)} getMemberTrendsModal={getMemberTrendsModal} />
