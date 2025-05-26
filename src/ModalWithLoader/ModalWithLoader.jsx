@@ -17,10 +17,10 @@ const ModalWithLoader = ({ isOpen, onClose, getMemberTrendsModal }) => {
 
         {/* Modal Content */}
         <h2 className="text-lg font-semibold mb-4 text-center">There is some server issue from N8N. Please try again to fetch data.</h2>
-        <div className="flex items-center justify-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-        </div>
-        <button
+         <div className="flex items-center justify-center w-full h-full">
+  <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin" />
+</div>
+        <button className='text-white'
           onClick={() => getMemberTrendsModal()}
         >
           Try Again
