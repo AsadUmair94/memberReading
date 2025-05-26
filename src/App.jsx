@@ -899,7 +899,7 @@ function App() {
 
                     <div className="space-y-4">
                       <div>
-                        <p className="font-semibold">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
+                        <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
                         <p>100%</p>
                         <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
                         <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
@@ -1104,7 +1104,7 @@ function App() {
 
                     <div className="space-y-4">
                       <div>
-                        <p className="font-semibold">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
+                        <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
                         <p>100%</p>
                         <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
                         <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
@@ -1174,7 +1174,7 @@ function App() {
                         name="projections"
                         value={formData.projections}
                         onChange={handleChangeFormdata}
-                        className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-0 "
                       >
                         <option value="Next Level">Next Level</option>
                         <option value="Green">Green</option>
@@ -1319,8 +1319,17 @@ function App() {
                     <p className="text-4xl font-bold text-center mb-4">{totalScoreCustom}</p>
 
                     <div className="space-y-4">
+                       {formData.projections == 'Custom' &&
+                      <button
+                        onClick={() => calculateScoreFuture()}
+                        style={{
+                          borderRadius:'0px'
+                        }}
+                        className="!bg-red-600 text-white rounded-none">
+                        Calculate
+                      </button>}
                       <div>
-                        <p className="font-semibold">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
+                        <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
                         <p>100%</p>
                         <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
                         <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
@@ -1349,12 +1358,7 @@ function App() {
                         <p className='flex items-center gap-1'>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalVisitors}  <FaArrowUp color="#3CCB3A" /> 10</p>
                       </div>
                     </div>
-                    {formData.projections == 'Custom' &&
-                      <button
-                        onClick={() => calculateScoreFuture()}
-                        className="!bg-red-600 text-white">
-                        Calculate
-                      </button>}
+                   
                   </div>
 
 
