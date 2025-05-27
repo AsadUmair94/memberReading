@@ -600,23 +600,23 @@ function App() {
       {loader && (
         <>
           <div className="flex items-center justify-center w-full h-full">
-  <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin" />
-</div>
+            <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin" />
+          </div>
 
         </>
 
       )}
 
       {after_six_month_calculations.length != 0 &&
-      <>
-      <div className='text-white text-[27px] font-bold'> BNI Capital Business Alliance</div>
-        <div className="min-h-screen bg-red-700 p-6 w-full">
-          <div className="bg-white w-full rounded-2xl p-6 shadow-lg"
-         style={{
+        <>
+          <div className='text-white text-[27px] font-bold'> BNI Capital Business Alliance</div>
+          <div className="min-h-screen bg-red-700 p-6 w-full">
+            <div className="bg-white w-full rounded-2xl p-6 shadow-lg"
+              style={{
                 width: selectedMember.length !== 0 && selectedMember === 'member_sheet' && '61rem'
-           }}>
-            {/* Top bar */}
-            {/* <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+              }}>
+              {/* Top bar */}
+              {/* <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
               <select className="border border-gray-300 rounded px-4 py-2 w-48"
                 value={selectedMember.memberName}
                 onChange={handleChange}
@@ -667,728 +667,729 @@ function App() {
                 </button>
               </div>
             </div> */}
-            <div className="bg-[#FAF7F4] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-4 rounded">
-              {/* Left side with selects */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2 gap-2 text-black">
-                <select
-                  className="border border-gray-300 rounded px-4 py-2 w-48 focus:outline-none focus:ring-0 "
-                  value={selectedMember.memberName}
-                  onChange={handleChange}
-                >
-                  {after_six_month_calculations.map((member, index) => (
-                    <>
-                      <option key={index} value={member.memberName}>
-                        {member.memberName}
-                      </option>
-                      <option key='index' value="member_sheet">
-                        Chapter Analysis
-                      </option>
-                    </>
-                  ))}
-                </select>
-
-                {selectedMember != 'member_sheet' &&
+              <div className="bg-[#FAF7F4] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-4 rounded">
+                {/* Left side with selects */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2 gap-2 text-black">
                   <select
-                    className="border border-gray-300 rounded px-4 py-2 w-48 focus:outline-none focus:ring-0"
-                    value={selectedMonth}
-                    onChange={(e) => changeMonth(e.target.value, '', '')}
+                    className="border border-gray-300 rounded px-4 py-2 w-48 focus:outline-none focus:ring-0 "
+                    value={selectedMember.memberName}
+                    onChange={handleChange}
                   >
-                    {availableMonths.map((month, index) => (
-                      <option key={index} value={month.value}>{month.name}</option>
+                    {after_six_month_calculations.map((member, index) => (
+                      <>
+                        <option key={index} value={member.memberName}>
+                          {member.memberName}
+                        </option>
+                        <option key='index' value="member_sheet">
+                          Chapter Analysis
+                        </option>
+                      </>
                     ))}
-                  </select>}
+                  </select>
+
+                  {selectedMember != 'member_sheet' &&
+                    <select
+                      className="border border-gray-300 rounded px-4 py-2 w-48 focus:outline-none focus:ring-0"
+                      value={selectedMonth}
+                      onChange={(e) => changeMonth(e.target.value, '', '')}
+                    >
+                      {availableMonths.map((month, index) => (
+                        <option key={index} value={month.value}>{month.name}</option>
+                      ))}
+                    </select>}
+                </div>
+
+                {/* Right side element */}
+
+
+                <div>
+                  {selectedMember.length != 0 && selectedMonth && returnStatus() == 'passed' &&
+                    <p className='text-black'>You will see this BNI {getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 2)} 1,2025</p>
+                  }
+                  {selectedMember.length != 0 && selectedMonth && returnStatus() == 'present' &&
+                    <p className='text-black'>You will see this BNI {getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 3)} 1,2025</p>
+                  }
+                  {selectedMember.length != 0 && selectedMonth && returnStatus() == 'future' &&
+                    <p className='text-black'>You will see this BNI {getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 4)} 1,2025</p>
+                  }
+                </div>
               </div>
-
-              {/* Right side element */}
-
-
-              <div>
-                {selectedMember.length != 0 && selectedMonth && returnStatus() == 'passed' &&
-                  <p className='text-black'>You will see this BNI {getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 2)} 1,2025</p>
-                }
-                {selectedMember.length != 0 && selectedMonth && returnStatus() == 'present' &&
-                  <p className='text-black'>You will see this BNI {getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 3)} 1,2025</p>
-                }
-                {selectedMember.length != 0 && selectedMonth && returnStatus() == 'future' &&
-                  <p className='text-black'>You will see this BNI {getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 4)} 1,2025</p>
-                }
+              <div className="flex items-center gap-2  p-4 ">
+                <div className="text-[18px] font-bold text-gray-800">{selectedMonth} Score</div>
+                <div className="text-[14px] text-black">{totalScoreCustom}</div>
+                <div class="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800"></div>
+                <div className="flex items-center text-sm text-green-500">
+                  <span className="font-medium">+10</span>
+                  <span className="text-gray-500 ml-1">from last month</span>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-2  p-4 ">
-  <div className="text-[18px] font-bold text-gray-800">{selectedMonth} Score</div>
-  <div className="text-[14px] text-black">{totalScoreCustom}</div>
-   <div class="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800"></div>
-  <div className="flex items-center text-sm text-green-500">
-    <span className="font-medium">+10</span>
-    <span className="text-gray-500 ml-1">from last month</span>
-  </div>
-</div>
-            {/* <div className="text-left mb-4">
+              {/* <div className="text-left mb-4">
               <div className="inline">
 
 
                 <strong>{selectedMonth} Score</strong> {totalScoreCustom} 10 from last month
               </div>
             </div> */}
-            {selectedMember.length != 0 && selectedMonth && returnStatus() == 'passed' && selectedMember != 'member_sheet' &&
-              <>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {/* Left Column */}
-                  <div className="space-y-4">
-                    <div className="bg-gray-100 p-4 rounded-xl text-left">
-                      <p className="text-sm text-gray-600 mb-1">
-                        <span className="font-semibold">{getMonthName(selectedMember?.currentPoints?.adjustedStartDateNewUser)} - {getMonthName(selectedMember?.currentMetrics?.getLastMonth)}'s Performance</span>{' '}
-                        <span>(last 6 months)</span>
-                      </p>
-                      <p className="text-sm text-gray-700">
-                        Strategic Partner:{' '}
-                        <span className="text-blue-600 underline">{selectedMember.memberName}</span>
-                      </p>
-                      <p className="font-bold text-lg mt-2">{selectedMember.memberName}</p>
-                      <p className="text-sm text-gray-700">Business Name</p>
-                      <p className="text-sm text-gray-500 mt-1">Role(s)</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
-                        <span className="text-sm">{selectedMember.powerTeam}</span>
-                      </div>
-                    </div>
-
-                    <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
-                      <p className="font-bold">{getMonthName(selectedMember?.currentMetrics?.getLastMonth)}’s Performance</p>
-                     <p className="text-blue-700 flex items-center gap-1">
-  <FaArrowUp color="#3CCB3A" />
-  10 points from last month
-</p>
-
-                      <div>
-                        <p className="font-semibold">Attendance</p>
-                        <p>Present</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="present"
-                            value={formData.present}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            max="5"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap">of {Number(getWednesdaysInMonth('03/2025'))}</p>
-                        </div>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">Referrals</p>
-                        <p className="flex items-center gap-1">
-                          RGO:
-                          
-                        </p>
-                       <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="rgo"
-                            value={formData.rgo}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          {/* <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600" : "text-red-600"}> */}
-                          <span className='flex items-center gap-1'>
-                            {selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}
-                            {substractReading(
-                              selectedMember?.currentMonth?.rgo,
-                              selectedMember?.previousMonth?.rgo
-                            )}
-                          </span>
-                        </div>
-
-
-                        <p className="flex items-center gap-1">
-                          RGI:
-                         
-                        </p>
-                       <div className="flex items-center">
-                           <input
-                            type="number"
-                            name="rgi"
-                            value={formData.rgi}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          {/* <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600" : "text-red-600"}> */}
-                          <span className='flex items-center gap-1'>
-                            {selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}
-                            {substractReading(
-                              selectedMember?.currentMonth?.rgi,
-                              selectedMember?.previousMonth?.rgi
-                            )}
-                          </span>
-                        </div>
-                      </div>
-
-
-
-                      <div>
-                        <p className="font-semibold">1-2-1s</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="one2ones"
-                            value={formData.one2ones}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.oneToOnes > selectedMember?.previousMonth?.oneToOnes ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.oneToOnes, selectedMember?.previousMonth?.oneToOnes)}
-                          </p>
-                        </div>
-                      </div>
-
-
-
-                      <div>
-                        <p className="font-semibold">CEUs</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="ceu"
-                            value={formData.ceus}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.ceu > selectedMember?.previousMonth?.ceu ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#3CCB3A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.ceu, selectedMember?.previousMonth?.ceu)}
-                          </p>
-                        </div>
-                      </div>
-
-
-
-                      <div>
-                        <p className="font-semibold">Visitors</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="Visitors"
-                            value={formData.visitors}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.visitors > selectedMember?.previousMonth?.visitors ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.visitors, selectedMember?.previousMonth?.visitors)}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Center Column */}
-                  <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
-                    <p className="font-bold text-xl mb-2 text-center">Current Score</p>
-                    <p className="text-4xl font-bold text-center mb-4">{selectedMember.currentScore}</p>
-
+              {selectedMember.length != 0 && selectedMonth && returnStatus() == 'passed' && selectedMember != 'member_sheet' &&
+                <>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Left Column */}
                     <div className="space-y-4">
-                      <div>
-                        <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
-                        <p>100%</p>
-                        <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
-                        <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
-                        <p>Substitutes: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes : 0}</p>
-                        <p>Medical: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves : 0}</p>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">Referrals: {selectedMember?.currentPoints?.referrals} points</p>
-                        <p className=" flex items-center gap-1">RGO: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsSend}   <FaArrowUp color="#3CCB3A" /> 10</p>
-                        <p className=" flex items-center gap-1">RGI: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsRecieved}   <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">1-2-1s: {selectedMember?.currentPoints?.oneToOnes}  points</p>
-                        <p className=" flex items-center gap-1">{selectedMember?.currentMetrics?.totalOfAllSixMonths?.total121s} <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">CEUs: {selectedMember?.currentPoints?.ceus}  points</p>
-                        <p className=" flex items-center gap-1">{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalCEU}<FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">Visitors: {selectedMember?.currentPoints?.visitors}  points</p>
-                        <p className=" flex items-center gap-1">{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalVisitors} <FaArrowUp color="#3CCB3A" />10</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column: Placeholder Cards */}
-                  <div className="space-y-4">
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
-                  </div>
-                </div>
-
-              </>}
-            {selectedMember.length != 0 && selectedMonth && returnStatus() == 'present' && selectedMember != 'member_sheet' &&
-              <>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {/* Left Column */}
-                  <div className="space-y-4">
-                    <div className="bg-gray-100 p-4 rounded-xl text-left">
-                      <p className="text-sm text-gray-600 mb-1">
-                        <span className="font-semibold">{getNextMonthName(selectedMember?.currentPoints?.adjustedStartDateNewUser)} - {getNextMonthName(selectedMember?.currentMetrics?.getLastMonth)}'s Performance</span>{' '}
-                        <span>(last 6 months)</span>
-                      </p>
-                      <p className="text-sm text-gray-700">
-                        Strategic Partner:{' '}
-                        <span className="text-blue-600 underline">{selectedMember.memberName}</span>
-                      </p>
-                      <p className="font-bold text-lg mt-2">{selectedMember.memberName}</p>
-                      <p className="text-sm text-gray-700">Business Name</p>
-                      <p className="text-sm text-gray-500 mt-1">Role(s)</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
-                        <span className="text-sm">{selectedMember.powerTeam}</span>
-                      </div>
-                    </div>
-
-                    <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
-                      <p className="font-bold">{getNextMonthName(selectedMember?.currentMetrics?.getLastMonth)}’s Performance</p>
-                      <p className="text-blue-700">⬆️ 10 points from last month</p>
-
-                      <div>
-                        <p className="font-semibold">Attendance</p>
-                        <p>Present</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="present"
-                            value={formData.present}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            max="5"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap">of {Number(getWednesdaysInMonth('03/2025'))}</p>
+                      <div className="bg-gray-100 p-4 rounded-xl text-left">
+                        <p className="text-sm text-gray-600 mb-1">
+                          <span className="font-semibold">{getMonthName(selectedMember?.currentPoints?.adjustedStartDateNewUser)} - {getMonthName(selectedMember?.currentMetrics?.getLastMonth)}'s Performance</span>{' '}
+                          <span>(last 6 months)</span>
+                        </p>
+                        <p className="text-sm text-gray-700">
+                          Strategic Partner:{' '}
+                          <span className="text-blue-600 underline">{selectedMember.memberName}</span>
+                        </p>
+                        <p className="font-bold text-lg mt-2">{selectedMember.memberName}</p>
+                        <p className="text-sm text-gray-700">Business Name</p>
+                        <p className="text-sm text-gray-500 mt-1">Role(s)</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
+                          <span className="text-sm">{selectedMember.powerTeam}</span>
                         </div>
                       </div>
 
-                      <div>
-                        <p className="font-semibold">Referrals</p>
-                        <p className="flex items-center gap-1">
-                          RGO:
-                          <input
-                            type="number"
-                            name="rgo"
-                            value={formData.rgo}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600 flex items-center gap-1" : "text-red-600 flex items-center gap-1"}>
-                            {selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ?  <FaArrowUp color="#3CCB3A" /> :  <FaArrowDown color="#C0192A" />}
-                            {substractReading(
-                              selectedMember?.currentMonth?.rgo,
-                              selectedMember?.previousMonth?.rgo
-                            )}
-                          </span>
+                      <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
+                        <p className="font-bold">{getMonthName(selectedMember?.currentMetrics?.getLastMonth)}’s Performance</p>
+                        <p className="text-blue-700 flex items-center gap-1">
+                          <FaArrowUp color="#3CCB3A" />
+                          10 points from last month
                         </p>
 
-
-                        <p className="flex items-center gap-1">
-                          RGI:
-                          <input
-                            type="number"
-                            name="rgi"
-                            value={formData.rgi}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600 flex items-center gap-1" : "text-red-600 flex items-center gap-1"}>
-                            {selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ?   <FaArrowUp color="#3CCB3A" />:
-  <FaArrowDown color="#C0192A" />}
-                            {substractReading(
-                              selectedMember?.currentMonth?.rgi,
-                              selectedMember?.previousMonth?.rgi
-                            )}
-                          </span>
-                        </p>
-                      </div>
-
-
-
-                      <div>
-                        <p className="font-semibold">1-2-1s</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="one2ones"
-                            value={formData.one2ones}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.oneToOnes > selectedMember?.previousMonth?.oneToOnes ?   <FaArrowUp color="#3CCB3A" /> :
-  <FaArrowDown color="#C0192A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.oneToOnes, selectedMember?.previousMonth?.oneToOnes)}
-                          </p>
+                        <div>
+                          <p className="font-semibold">Attendance</p>
+                          <p>Present</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="present"
+                              value={formData.present}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              max="5"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap">of {Number(getWednesdaysInMonth('03/2025'))}</p>
+                          </div>
                         </div>
-                      </div>
 
+                        <div>
+                          <p className="font-semibold">Referrals</p>
+                          <p className="flex items-center gap-1">
+                            RGO:
 
-
-                      <div>
-                        <p className="font-semibold">CEUs</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="ceu"
-                            value={formData.ceus}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.ceu > selectedMember?.previousMonth?.ceu ?   <FaArrowUp color="#3CCB3A" /> :
-  <FaArrowDown color="#C0192A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.ceu, selectedMember?.previousMonth?.ceu)}
                           </p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="rgo"
+                              value={formData.rgo}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            {/* <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600" : "text-red-600"}> */}
+                            <span className='flex items-center gap-1'>
+                              {selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}
+                              {substractReading(
+                                selectedMember?.currentMonth?.rgo,
+                                selectedMember?.previousMonth?.rgo
+                              )}
+                            </span>
+                          </div>
+
+
+                          <p className="flex items-center gap-1">
+                            RGI:
+
+                          </p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="rgi"
+                              value={formData.rgi}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            {/* <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600" : "text-red-600"}> */}
+                            <span className='flex items-center gap-1'>
+                              {selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}
+                              {substractReading(
+                                selectedMember?.currentMonth?.rgi,
+                                selectedMember?.previousMonth?.rgi
+                              )}
+                            </span>
+                          </div>
                         </div>
-                      </div>
 
 
 
-                      <div>
-                        <p className="font-semibold">Visitors</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="Visitors"
-                            value={formData.visitors}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.visitors > selectedMember?.previousMonth?.visitors ? <FaArrowUp color="#3CCB3A" />:
-  <FaArrowDown color="#C0192A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.visitors, selectedMember?.previousMonth?.visitors)}
-                          </p>
+                        <div>
+                          <p className="font-semibold">1-2-1s</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="one2ones"
+                              value={formData.one2ones}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.oneToOnes > selectedMember?.previousMonth?.oneToOnes ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.oneToOnes, selectedMember?.previousMonth?.oneToOnes)}
+                            </p>
+                          </div>
+                        </div>
+
+
+
+                        <div>
+                          <p className="font-semibold">CEUs</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="ceu"
+                              value={formData.ceus}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.ceu > selectedMember?.previousMonth?.ceu ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.ceu, selectedMember?.previousMonth?.ceu)}
+                            </p>
+                          </div>
+                        </div>
+
+
+
+                        <div>
+                          <p className="font-semibold">Visitors</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="Visitors"
+                              value={formData.visitors}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.visitors > selectedMember?.previousMonth?.visitors ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.visitors, selectedMember?.previousMonth?.visitors)}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Center Column */}
-                  <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
-                    <p className="font-bold text-xl mb-2 text-center">Current Score</p>
-                    <p className="text-4xl font-bold text-center mb-4">{selectedMember.currentScore}</p>
+                    {/* Center Column */}
+                    <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
+                      <p className="font-bold text-xl mb-2 text-center">Current Score</p>
+                      <p className="text-4xl font-bold text-center mb-4">{selectedMember.currentScore}</p>
 
+                      <div className="space-y-4">
+                        <div>
+                          <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
+                          <p>100%</p>
+                          <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
+                          <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
+                          <p>Substitutes: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes : 0}</p>
+                          <p>Medical: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves : 0}</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">Referrals: {selectedMember?.currentPoints?.referrals} points</p>
+                          <p className=" flex items-center gap-1">RGO: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsSend}   <FaArrowUp color="#3CCB3A" /> 10</p>
+                          <p className=" flex items-center gap-1">RGI: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsRecieved}   <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">1-2-1s: {selectedMember?.currentPoints?.oneToOnes}  points</p>
+                          <p className=" flex items-center gap-1">{selectedMember?.currentMetrics?.totalOfAllSixMonths?.total121s} <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">CEUs: {selectedMember?.currentPoints?.ceus}  points</p>
+                          <p className=" flex items-center gap-1">{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalCEU}<FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">Visitors: {selectedMember?.currentPoints?.visitors}  points</p>
+                          <p className=" flex items-center gap-1">{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalVisitors} <FaArrowUp color="#3CCB3A" />10</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column: Placeholder Cards */}
                     <div className="space-y-4">
-                      <div>
-                        <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
-                        <p>100%</p>
-                        <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
-                        <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
-                        <p>Substitutes: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes : 0}</p>
-                        <p>Medical: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves : 0}</p>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">Referrals: {selectedMember?.currentPoints?.referrals} points</p>
-                        <p>RGO: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsSend} <FaArrowUp color="#3CCB3A" /> 10</p>
-                        <p>RGI: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsRecieved} <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">1-2-1s: {selectedMember?.currentPoints?.oneToOnes}  points</p>
-                        <p>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.total121s} <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">CEUs: {selectedMember?.currentPoints?.ceus}  points</p>
-                        <p>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalCEU} <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">Visitors: {selectedMember?.currentPoints?.visitors}  points</p>
-                        <p>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalVisitors} <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
                     </div>
                   </div>
 
-                  {/* Right Column: Placeholder Cards */}
-                  <div className="space-y-4">
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
-                  </div>
-                </div>
-
-              </>}
-            {selectedMember.length != 0 && selectedMonth && returnStatus() == 'future' && selectedMember != 'member_sheet' &&
-              <>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {/* Left Column */}
-                  <div className="space-y-4">
-                    <div className="bg-gray-100 p-4 rounded-xl text-left">
-                      <p className="text-sm text-gray-600 mb-1">
-                        <span className="font-semibold">{getNextMonthName(selectedMember?.currentPoints?.adjustedStartDateNewUser)} - {getNextMonthName(selectedMember?.currentMetrics?.getLastMonth)}'s Performance</span>{' '}
-                        <span>(last 6 months)</span>
-                      </p>
-                      <p className="text-sm text-gray-700">
-                        Strategic Partner:{' '}
-                        <span className="text-blue-600 underline">{selectedMember.memberName}</span>
-                      </p>
-                      <p className="font-bold text-lg mt-2">{selectedMember.memberName}</p>
-                      <p className="text-sm text-gray-700">Business Name</p>
-                      <p className="text-sm text-gray-500 mt-1">Role(s)</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
-                        <span className="text-sm">{selectedMember.powerTeam}</span>
-                      </div>
-                    </div>
-
-                    <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
-                      <p className="font-bold">{getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 2)}’s Projection</p>
-
-                      <select
-                        name="projections"
-                        value={formData.projections}
-                        onChange={handleChangeFormdata}
-                        className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-0 "
-                      >
-                        <option value="Next Level">Next Level</option>
-                        <option value="Green">Green</option>
-                        {
-                          selectedMember.improvementsExtraSheet?.toImprove?.attendance &&
-                          <option value="Maximum">Maximum</option>
-                        }
-
-                        <option value="Custom">Custom</option>
-                      </select>
-
-                      <div>
-                        <p className="font-semibold">Attendance</p>
-                        <p>Present</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="present"
-                            value={formData.present}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            max="5"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap">of {Number(getWednesdaysInMonth('03/2025'))}</p>
-                        </div>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">Referrals</p>
-                        <p className="flex items-center gap-1">
-                          RGO:
-                          <input
-                            type="number"
-                            name="rgo"
-                            value={formData.rgo}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600" : "text-red-600"}>
-                            {selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ?  <FaArrowUp color="#3CCB3A" /> :   <FaArrowDown color="#C0192A" />}
-                            {substractReading(
-                              selectedMember?.currentMonth?.rgo,
-                              selectedMember?.previousMonth?.rgo
-                            )}
-                          </span>
-                        </p>
-
-
-                        <p className="flex items-center gap-1">
-                          RGI:
-                          <input
-                            type="number"
-                            name="rgi"
-                            value={formData.rgi}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600 flex items-center gap-1" : "text-red-600 flex items-center gap-1"}>
-                            {selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ?  <FaArrowUp color="#3CCB3A" /> :   <FaArrowDown color="#C0192A" />}
-                            {substractReading(
-                              selectedMember?.currentMonth?.rgi,
-                              selectedMember?.previousMonth?.rgi
-                            )}
-                          </span>
-                        </p>
-                      </div>
-
-
-
-                      <div>
-                        <p className="font-semibold">1-2-1s</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="one2ones"
-                            value={formData.one2ones}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.oneToOnes > selectedMember?.previousMonth?.oneToOnes ?  <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.oneToOnes, selectedMember?.previousMonth?.oneToOnes)}
-                          </p>
-                        </div>
-                      </div>
-
-
-
-                      <div>
-                        <p className="font-semibold">CEUs</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="ceu"
-                            value={formData.ceus}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.ceu > selectedMember?.previousMonth?.ceu ? <FaArrowUp color="#3CCB3A" /> :  <FaArrowDown color="#C0192A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.ceu, selectedMember?.previousMonth?.ceu)}
-                          </p>
-                        </div>
-                      </div>
-
-
-
-                      <div>
-                        <p className="font-semibold">Visitors</p>
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            name="Visitors"
-                            value={formData.visitors}
-                            onChange={handleChangeFormdata}
-                            className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                            min="0"
-                            readOnly={editable}
-                          />
-                          <p className="whitespace-nowrap flex items-center gap-1">
-                            {selectedMember?.currentMonth?.visitors > selectedMember?.previousMonth?.visitors ? <FaArrowUp color="#3CCB3A" />:   <FaArrowDown color="#C0192A" />}{" "}
-                            {substractReading(selectedMember?.currentMonth?.visitors, selectedMember?.previousMonth?.visitors)}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Center Column */}
-                  <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
-                    <p className="font-bold text-xl mb-2 text-center">Future Score</p>
-                    <p className="text-4xl font-bold text-center mb-4">{totalScoreCustom}</p>
-
+                </>}
+              {selectedMember.length != 0 && selectedMonth && returnStatus() == 'present' && selectedMember != 'member_sheet' &&
+                <>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Left Column */}
                     <div className="space-y-4">
-                       {formData.projections == 'Custom' &&
-                      <button
-                        onClick={() => calculateScoreFuture()}
-                        style={{
-                          borderRadius:'0px'
-                        }}
-                        className="!bg-red-600 text-white rounded-none">
-                        Calculate
-                      </button>}
-                      <div>
-                        <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
-                        <p>100%</p>
-                        <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
-                        <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
-                        <p>Substitutes: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes : 0}</p>
-                        <p>Medical: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves : 0}</p>
+                      <div className="bg-gray-100 p-4 rounded-xl text-left">
+                        <p className="text-sm text-gray-600 mb-1">
+                          <span className="font-semibold">{getNextMonthName(selectedMember?.currentPoints?.adjustedStartDateNewUser)} - {getNextMonthName(selectedMember?.currentMetrics?.getLastMonth)}'s Performance</span>{' '}
+                          <span>(last 6 months)</span>
+                        </p>
+                        <p className="text-sm text-gray-700">
+                          Strategic Partner:{' '}
+                          <span className="text-blue-600 underline">{selectedMember.memberName}</span>
+                        </p>
+                        <p className="font-bold text-lg mt-2">{selectedMember.memberName}</p>
+                        <p className="text-sm text-gray-700">Business Name</p>
+                        <p className="text-sm text-gray-500 mt-1">Role(s)</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
+                          <span className="text-sm">{selectedMember.powerTeam}</span>
+                        </div>
                       </div>
 
-                      <div>
-                        <p className="font-semibold">Referrals: {selectedMember?.currentPoints?.referrals} points</p>
-                        <p className='flex items-center gap-1'>RGO: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsSend}  <FaArrowUp color="#3CCB3A" /> 10</p>
-                        <p className='flex items-center gap-1'>RGI: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsRecieved}  <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
+                      <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
+                        <p className="font-bold">{getNextMonthName(selectedMember?.currentMetrics?.getLastMonth)}’s Performance</p>
+                        <p className="text-blue-700">⬆️ 10 points from last month</p>
 
-                      <div>
-                        <p className="font-semibold">1-2-1s: {selectedMember?.currentPoints?.oneToOnes}  points</p>
-                        <p className='flex items-center gap-1'>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.total121s}  <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
+                        <div>
+                          <p className="font-semibold">Attendance</p>
+                          <p>Present</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="present"
+                              value={formData.present}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              max="5"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap">of {Number(getWednesdaysInMonth('03/2025'))}</p>
+                          </div>
+                        </div>
 
-                      <div>
-                        <p className="font-semibold">CEUs: {selectedMember?.currentPoints?.ceus}  points</p>
-                        <p className='flex items-center gap-1'>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalCEU}  <FaArrowUp color="#3CCB3A" /> 10</p>
-                      </div>
+                        <div>
+                          <p className="font-semibold">Referrals</p>
+                          <p className="flex items-center gap-1">
+                            RGO:
+                            <input
+                              type="number"
+                              name="rgo"
+                              value={formData.rgo}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600 flex items-center gap-1" : "text-red-600 flex items-center gap-1"}>
+                              {selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}
+                              {substractReading(
+                                selectedMember?.currentMonth?.rgo,
+                                selectedMember?.previousMonth?.rgo
+                              )}
+                            </span>
+                          </p>
 
-                      <div>
-                        <p className="font-semibold">Visitors: {selectedMember?.currentPoints?.visitors}  points</p>
-                        <p className='flex items-center gap-1'>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalVisitors}  <FaArrowUp color="#3CCB3A" /> 10</p>
+
+                          <p className="flex items-center gap-1">
+                            RGI:
+                            <input
+                              type="number"
+                              name="rgi"
+                              value={formData.rgi}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600 flex items-center gap-1" : "text-red-600 flex items-center gap-1"}>
+                              {selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? <FaArrowUp color="#3CCB3A" /> :
+                                <FaArrowDown color="#C0192A" />}
+                              {substractReading(
+                                selectedMember?.currentMonth?.rgi,
+                                selectedMember?.previousMonth?.rgi
+                              )}
+                            </span>
+                          </p>
+                        </div>
+
+
+
+                        <div>
+                          <p className="font-semibold">1-2-1s</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="one2ones"
+                              value={formData.one2ones}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.oneToOnes > selectedMember?.previousMonth?.oneToOnes ? <FaArrowUp color="#3CCB3A" /> :
+                                <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.oneToOnes, selectedMember?.previousMonth?.oneToOnes)}
+                            </p>
+                          </div>
+                        </div>
+
+
+
+                        <div>
+                          <p className="font-semibold">CEUs</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="ceu"
+                              value={formData.ceus}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.ceu > selectedMember?.previousMonth?.ceu ? <FaArrowUp color="#3CCB3A" /> :
+                                <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.ceu, selectedMember?.previousMonth?.ceu)}
+                            </p>
+                          </div>
+                        </div>
+
+
+
+                        <div>
+                          <p className="font-semibold">Visitors</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="Visitors"
+                              value={formData.visitors}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.visitors > selectedMember?.previousMonth?.visitors ? <FaArrowUp color="#3CCB3A" /> :
+                                <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.visitors, selectedMember?.previousMonth?.visitors)}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                   
+
+                    {/* Center Column */}
+                    <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
+                      <p className="font-bold text-xl mb-2 text-center">Current Score</p>
+                      <p className="text-4xl font-bold text-center mb-4">{selectedMember.currentScore}</p>
+
+                      <div className="space-y-4">
+                        <div>
+                          <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
+                          <p>100%</p>
+                          <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
+                          <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
+                          <p>Substitutes: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes : 0}</p>
+                          <p>Medical: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves : 0}</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">Referrals: {selectedMember?.currentPoints?.referrals} points</p>
+                          <p>RGO: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsSend} <FaArrowUp color="#3CCB3A" /> 10</p>
+                          <p>RGI: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsRecieved} <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">1-2-1s: {selectedMember?.currentPoints?.oneToOnes}  points</p>
+                          <p>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.total121s} <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">CEUs: {selectedMember?.currentPoints?.ceus}  points</p>
+                          <p>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalCEU} <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">Visitors: {selectedMember?.currentPoints?.visitors}  points</p>
+                          <p>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalVisitors} <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column: Placeholder Cards */}
+                    <div className="space-y-4">
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
+                    </div>
                   </div>
 
+                </>}
+              {selectedMember.length != 0 && selectedMonth && returnStatus() == 'future' && selectedMember != 'member_sheet' &&
+                <>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Left Column */}
+                    <div className="space-y-4">
+                      <div className="bg-gray-100 p-4 rounded-xl text-left">
+                        <p className="text-sm text-gray-600 mb-1">
+                          <span className="font-semibold">{getNextMonthName(selectedMember?.currentPoints?.adjustedStartDateNewUser)} - {getNextMonthName(selectedMember?.currentMetrics?.getLastMonth)}'s Performance</span>{' '}
+                          <span>(last 6 months)</span>
+                        </p>
+                        <p className="text-sm text-gray-700">
+                          Strategic Partner:{' '}
+                          <span className="text-blue-600 underline">{selectedMember.memberName}</span>
+                        </p>
+                        <p className="font-bold text-lg mt-2">{selectedMember.memberName}</p>
+                        <p className="text-sm text-gray-700">Business Name</p>
+                        <p className="text-sm text-gray-500 mt-1">Role(s)</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
+                          <span className="text-sm">{selectedMember.powerTeam}</span>
+                        </div>
+                      </div>
 
-                  {/* Right Column: Placeholder Cards */}
-                  <div className="space-y-4">
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
-                    <div className="bg-gray-200 rounded-xl h-24"></div>
+                      <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
+                        <p className="font-bold">{getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 2)}’s Projection</p>
+
+                        <select
+                          name="projections"
+                          value={formData.projections}
+                          onChange={handleChangeFormdata}
+                          className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-0 "
+                        >
+                          <option value="Next Level">Next Level</option>
+                          <option value="Green">Green</option>
+                          {
+                            selectedMember.improvementsExtraSheet?.toImprove?.attendance &&
+                            <option value="Maximum">Maximum</option>
+                          }
+
+                          <option value="Custom">Custom</option>
+                        </select>
+
+                        <div>
+                          <p className="font-semibold">Attendance</p>
+                          <p>Present</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="present"
+                              value={formData.present}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              max="5"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap">of {Number(getWednesdaysInMonth('03/2025'))}</p>
+                          </div>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">Referrals</p>
+                          <p className="flex items-center gap-1">
+                            RGO:
+                            <input
+                              type="number"
+                              name="rgo"
+                              value={formData.rgo}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600" : "text-red-600"}>
+                              {selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}
+                              {substractReading(
+                                selectedMember?.currentMonth?.rgo,
+                                selectedMember?.previousMonth?.rgo
+                              )}
+                            </span>
+                          </p>
+
+
+                          <p className="flex items-center gap-1">
+                            RGI:
+                            <input
+                              type="number"
+                              name="rgi"
+                              value={formData.rgi}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600 flex items-center gap-1" : "text-red-600 flex items-center gap-1"}>
+                              {selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}
+                              {substractReading(
+                                selectedMember?.currentMonth?.rgi,
+                                selectedMember?.previousMonth?.rgi
+                              )}
+                            </span>
+                          </p>
+                        </div>
+
+
+
+                        <div>
+                          <p className="font-semibold">1-2-1s</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="one2ones"
+                              value={formData.one2ones}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.oneToOnes > selectedMember?.previousMonth?.oneToOnes ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.oneToOnes, selectedMember?.previousMonth?.oneToOnes)}
+                            </p>
+                          </div>
+                        </div>
+
+
+
+                        <div>
+                          <p className="font-semibold">CEUs</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="ceu"
+                              value={formData.ceus}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.ceu > selectedMember?.previousMonth?.ceu ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.ceu, selectedMember?.previousMonth?.ceu)}
+                            </p>
+                          </div>
+                        </div>
+
+
+
+                        <div>
+                          <p className="font-semibold">Visitors</p>
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              name="Visitors"
+                              value={formData.visitors}
+                              onChange={handleChangeFormdata}
+                              className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                              min="0"
+                              readOnly={editable}
+                            />
+                            <p className="whitespace-nowrap flex items-center gap-1">
+                              {selectedMember?.currentMonth?.visitors > selectedMember?.previousMonth?.visitors ? <FaArrowUp color="#3CCB3A" /> : <FaArrowDown color="#C0192A" />}{" "}
+                              {substractReading(selectedMember?.currentMonth?.visitors, selectedMember?.previousMonth?.visitors)}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Center Column */}
+                    <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
+                      <p className="font-bold text-xl mb-2 text-center">Future Score</p>
+                      <p className="text-4xl font-bold text-center mb-4">{totalScoreCustom}</p>
+
+                      <div className="space-y-4">
+                        {formData.projections == 'Custom' &&
+                          <button
+                            onClick={() => calculateScoreFuture()}
+                            style={{
+                              borderRadius: '0px'
+                            }}
+                            className="!bg-red-600 text-white rounded-none">
+                            Calculate
+                          </button>}
+                        <div>
+                          <p className="font-semibold text-[22px]">Attendance: {selectedMember?.currentPoints?.attendance} points</p>
+                          <p>100%</p>
+                          <p>Present: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalPresents : 0}</p>
+                          <p>Late: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalLates : 0}</p>
+                          <p>Substitutes: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalSubstitutes : 0}</p>
+                          <p>Medical: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves ? selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalMedicalsLeaves : 0}</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">Referrals: {selectedMember?.currentPoints?.referrals} points</p>
+                          <p className='flex items-center gap-1'>RGO: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsSend}  <FaArrowUp color="#3CCB3A" /> 10</p>
+                          <p className='flex items-center gap-1'>RGI: {selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalReferralsRecieved}  <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">1-2-1s: {selectedMember?.currentPoints?.oneToOnes}  points</p>
+                          <p className='flex items-center gap-1'>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.total121s}  <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">CEUs: {selectedMember?.currentPoints?.ceus}  points</p>
+                          <p className='flex items-center gap-1'>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalCEU}  <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+
+                        <div>
+                          <p className="font-semibold">Visitors: {selectedMember?.currentPoints?.visitors}  points</p>
+                          <p className='flex items-center gap-1'>{selectedMember?.currentMetrics?.totalOfAllSixMonths?.totalVisitors}  <FaArrowUp color="#3CCB3A" /> 10</p>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                    {/* Right Column: Placeholder Cards */}
+                    <div className="space-y-4">
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
+                      <div className="bg-gray-200 rounded-xl h-24"></div>
+                    </div>
                   </div>
-                </div>
 
-              </>}
+                </>}
+
+            </div>
+
+            {selectedMember.length !== 0 && selectedMember === 'member_sheet' && (
+              <div className="bg-white w-full rounded-2xl p-6 shadow-lg h-screen" >
+                <iframe
+                  src="https://docs.google.com/document/d/1oHvSNGSPNIKZ_Tp_CNctxWElP2E1pP40lAgxIoKDrLQ/edit?pli=1&tab=t.0#heading=h.82mvvcpz6b4r"
+                  className="w-full h-full"
+                  frameBorder="0"
+                  title="Google Doc"
+                ></iframe>
+              </div>
+            )}
 
           </div>
-
-          {selectedMember.length !== 0 && selectedMember === 'member_sheet' && (
-           <div className="bg-white w-full rounded-2xl p-6 shadow-lg h-screen" >
-  <iframe
-    src="https://docs.google.com/document/d/1oHvSNGSPNIKZ_Tp_CNctxWElP2E1pP40lAgxIoKDrLQ/edit?pli=1&tab=t.0#heading=h.82mvvcpz6b4r"
-    className="w-full h-full"
-    frameBorder="0"
-    title="Google Doc"
-  ></iframe>
-</div>
-          )}
-
-        </div>
         </>}
 
 
