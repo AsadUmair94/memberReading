@@ -898,6 +898,10 @@ function App() {
 
                     {/* Center Column */}
                     <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
+                      <p className="text-sm text-gray-600 mb-1">
+                        <span className="font-semibold">{getMonthName(selectedMember?.currentPoints?.adjustedStartDateNewUser)} - {getMonthName(selectedMember?.currentMetrics?.getLastMonth)}'s Performance</span>{' '}
+                        <span>(last 6 months)</span>
+                      </p>
                       <p className="font-bold text-xl mb-2 text-center">Current Score</p>
                       <p className="text-4xl font-bold text-center mb-4">{selectedMember.currentScore}</p>
 
@@ -1103,6 +1107,10 @@ function App() {
 
                     {/* Center Column */}
                     <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
+                      <p className="text-sm text-gray-600 mb-1">
+                        <span className="font-semibold">{getNextMonthName(selectedMember?.currentPoints?.adjustedStartDateNewUser)} - {getNextMonthName(selectedMember?.currentMetrics?.getLastMonth)}'s Performance</span>{' '}
+                        <span>(last 6 months)</span>
+                      </p>
                       <p className="font-bold text-xl mb-2 text-center">Current Score</p>
                       <p className="text-4xl font-bold text-center mb-4">{selectedMember.currentScore}</p>
 
@@ -1319,6 +1327,10 @@ function App() {
 
                     {/* Center Column */}
                     <div className="bg-gray-100 p-4 rounded-xl text-left text-sm">
+                      <p className="text-sm text-gray-600 mb-1">
+                        <span className="font-semibold">{getNextMonthNametwice(selectedMember?.currentPoints?.adjustedStartDateNewUser, 2)} - {getNextMonthNametwice(selectedMember?.currentMetrics?.getLastMonth, 2)}'s Performance</span>{' '}
+                        <span>(last 6 months)</span>
+                      </p>
                       <p className="font-bold text-xl mb-2 text-center">Future Score</p>
                       <p className="text-4xl font-bold text-center mb-4">{totalScoreCustom}</p>
 
