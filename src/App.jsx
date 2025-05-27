@@ -611,7 +611,10 @@ function App() {
       <>
       <div className='text-white text-[27px] font-bold'> BNI Capital Business Alliance</div>
         <div className="min-h-screen bg-red-700 p-6 w-full">
-          <div className="bg-white w-full rounded-2xl p-6 shadow-lg">
+          <div className="bg-white w-full rounded-2xl p-6 shadow-lg"
+         style={{
+                width: selectedMember.length !== 0 && selectedMember === 'member_sheet' && '61rem'
+           }}>
             {/* Top bar */}
             {/* <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
               <select className="border border-gray-300 rounded px-4 py-2 w-48"
@@ -1375,15 +1378,14 @@ function App() {
           </div>
 
           {selectedMember.length !== 0 && selectedMember === 'member_sheet' && (
-            <div className="bg-white w-full rounded-2xl p-6 shadow-lg">
-              <iframe
-                src="https://docs.google.com/document/d/1oHvSNGSPNIKZ_Tp_CNctxWElP2E1pP40lAgxIoKDrLQ/edit?pli=1&tab=t.0#heading=h.82mvvcpz6b4r"
-                width="100%"
-                height="1000px"
-                frameBorder="0"
-                title="Google Sheet"
-              ></iframe>
-            </div>
+           <div className="bg-white w-full rounded-2xl p-6 shadow-lg h-screen" >
+  <iframe
+    src="https://docs.google.com/document/d/1oHvSNGSPNIKZ_Tp_CNctxWElP2E1pP40lAgxIoKDrLQ/edit?pli=1&tab=t.0#heading=h.82mvvcpz6b4r"
+    className="w-full h-full"
+    frameBorder="0"
+    title="Google Doc"
+  ></iframe>
+</div>
           )}
 
         </div>
