@@ -717,9 +717,6 @@ function App() {
     if (type == "future" && value == 'Custom') {
 
       setEditable(false);
-
-
-      setEditable(true);
       setFormData({
         projections: "Custom",
         present: member.improvementsExtraSheet.toNextLevel.attendance,
