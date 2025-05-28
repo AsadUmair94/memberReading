@@ -208,14 +208,16 @@ function App() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
-      const data = await res.json();
+      var data = await res.json();
+      // var newData = await res.json();
       //  console.log('=======>',data)
-      const membersArray = Object.entries(data).map(([name, data]) => ({
+        var newData = data.combinedData.memberAnalysis.memberAnalysis;
+      const membersArray = Object.entries(newData).map(([name, data]) => ({
         member_name: name,
         memberName: name,
         ...data,
       }));
-
+   pushDataForDate({data:membersArray,document:data?.combinedData?.DocumentData?.output_markdown ?? ''});
       return membersArray; // return result after fetch is done
     } catch (error) {
       setLoader(false);
@@ -227,7 +229,7 @@ function App() {
   const getDataFromN8n = async (months) => {
     var all_mmbers = await getMemberTrends();
     console.log(all_mmbers);
-    pushDataForDate(all_mmbers);
+ 
     setAfter_six_month_calculations(all_mmbers);
     var selectedOne = all_mmbers[0];
     setSelectedMember(selectedOne);
@@ -315,7 +317,7 @@ function App() {
 
   useEffect(async () => {
     setAvailableMonths(getStatusMonths());
-    var months = getStatusMonths();
+    var months = await getStatusMonths();
 
     const data = await checkMonthlyDataExists();
     if (!data) {
@@ -326,7 +328,9 @@ function App() {
       setAfter_six_month_calculations(data?.data);
       var selectedOne = data?.data[0];
       setSelectedMember(selectedOne);
+      if (months) {
       changeMonth(months[0].value, months, selectedOne);
+      }
       setEditable(true);
       // setTimeout(() => {
       //   setLoader(false);
@@ -403,7 +407,7 @@ function App() {
   };
   const calculateCustomScore = (type, member) => {
     console.log(member);
-    const date = new Date(member.currentMetrics.currentDate);
+    const date = new Date(member?.currentMetrics?.currentDate);
     const month = date.getMonth() + 1; // getMonth() returns 0-based index
     const year = date.getFullYear();
 
@@ -664,20 +668,20 @@ function App() {
       calculateCustomScore("present", member);
     }
     if (nowSelect.status == "passed") {
-      setTotalScoreCustom(member.currentScore);
+      setTotalScoreCustom(member?.currentScore);
       setEditable(true);
       setFormData((prev) => ({
         ...prev,
         projections: "Maximum",
-        present: member.currentMonth.presents,
-        late: member.currentMonth.late,
-        substitutes: member.currentMonth.substitutes,
-        medical: member.currentMonth.medical,
-        rgo: member.currentMonth.rgo,
-        rgi: member.currentMonth.rgi,
-        one2ones: member.currentMonth.oneToOnes,
-        ceus: member.currentMonth.ceu,
-        visitors: member.currentMonth.visitors,
+        present: member?.currentMonth?.presents,
+        late: member?.currentMonth?.late,
+        substitutes: member?.currentMonth?.substitutes,
+        medical: member?.currentMonth?.medical,
+        rgo: member?.currentMonth?.rgo,
+        rgi: member?.currentMonth?.rgi,
+        one2ones: member?.currentMonth?.oneToOnes,
+        ceus: member?.currentMonth?.ceu,
+        visitors: member?.currentMonth?.visitors,
       }));
     }
     if (nowSelect.status == "future") {
@@ -689,6 +693,9 @@ function App() {
   useEffect(() => {
     document.body.style.backgroundColor = "#c10007"; // white
   }, []);
+
+
+  console.log(formData.projections,'munafiq k mu mai hasbshi ka ')
   return (
     <div className=" m-0 p-0">
       {loader && (
@@ -993,6 +1000,7 @@ function App() {
                           <div>
                             <p className="font-semibold">1-2-1s</p>
                             <div className="flex items-center">
+                             
                               <input
                                 type="number"
                                 name="one2ones"
@@ -1001,7 +1009,10 @@ function App() {
                                 className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                                 min="0"
                                 readOnly={editable}
+
+                                
                               />
+                             
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.oneToOnes >
                                 selectedMember?.previousMonth?.oneToOnes ? (
@@ -1647,6 +1658,7 @@ function App() {
                             <p className="font-semibold">Attendance</p>
                             <p>Present</p>
                             <div className="flex items-center">
+                              {formData.projections === 'Custom'&&
                               <input
                                 type="number"
                                 name="present"
@@ -1656,7 +1668,8 @@ function App() {
                                 min="0"
                                 max="5"
                                 readOnly={editable}
-                              />
+                              />}
+                              {formData.projections === 'Custom'&& <p className="pr-2">{formData.present}</p>}
                               <p className="whitespace-nowrap">
                                 of {Number(getWednesdaysInMonth("03/2025"))}
                               </p>
@@ -1665,8 +1678,10 @@ function App() {
 
                           <div>
                             <p className="font-semibold">Referrals</p>
-                            <p className="flex items-center gap-1">
-                              RGO:
+                            <p className="">
+                               RGO:</p>
+                              <div className="flex items-center">
+                             {formData.projections === 'Custom'&&
                               <input
                                 type="number"
                                 name="rgo"
@@ -1675,13 +1690,14 @@ function App() {
                                 className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
                                 min="0"
                                 readOnly={editable}
-                              />
-                              <span
+                              />}
+                              {formData.projections === 'Custom'&& <p className="pr-2">{formData.rgo}</p>}
+                              <p
                                 className={
                                   selectedMember?.currentMonth?.rgo >
                                   selectedMember?.previousMonth?.rgo
-                                    ? "text-green-600"
-                                    : "text-red-600"
+                                    ? "text-green-600 flex items-center gap-1"
+                                    : "text-red-600 flex items-center gap-1"
                                 }
                               >
                                 {selectedMember?.currentMonth?.rgo >
@@ -1694,11 +1710,14 @@ function App() {
                                   selectedMember?.currentMonth?.rgo,
                                   selectedMember?.previousMonth?.rgo
                                 )}
-                              </span>
-                            </p>
+                              </p>
+                            </div>
+                            <div>
 
-                            <p className="flex items-center gap-1">
-                              RGI:
+                            <p className="">
+                              RGI: </p>
+                              <div className="flex items-center">
+                              {formData.projections === 'Custom'&&
                               <input
                                 type="number"
                                 name="rgi"
@@ -1707,8 +1726,9 @@ function App() {
                                 className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
                                 min="0"
                                 readOnly={editable}
-                              />
-                              <span
+                              />}
+                              {formData.projections === 'Custom'&& <p className="pr-2">{formData.rgi}</p>}
+                              <p
                                 className={
                                   selectedMember?.currentMonth?.rgi >
                                   selectedMember?.previousMonth?.rgi
@@ -1726,13 +1746,16 @@ function App() {
                                   selectedMember?.currentMonth?.rgi,
                                   selectedMember?.previousMonth?.rgi
                                 )}
-                              </span>
-                            </p>
+                              </p>
+                              </div>
+                              </div>
+                            
                           </div>
 
                           <div>
                             <p className="font-semibold">1-2-1s</p>
                             <div className="flex items-center">
+                               {formData.projections === 'Custom'&&
                               <input
                                 type="number"
                                 name="one2ones"
@@ -1741,7 +1764,8 @@ function App() {
                                 className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                                 min="0"
                                 readOnly={editable}
-                              />
+                              />}
+                               {formData.projections !== 'Custom'&& <p className="pr-2">{formData.one2ones}</p>}
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.oneToOnes >
                                 selectedMember?.previousMonth?.oneToOnes ? (
@@ -1760,6 +1784,7 @@ function App() {
                           <div>
                             <p className="font-semibold">CEUs</p>
                             <div className="flex items-center">
+                              {formData.projections === 'Custom'&&
                               <input
                                 type="number"
                                 name="ceu"
@@ -1768,7 +1793,8 @@ function App() {
                                 className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                                 min="0"
                                 readOnly={editable}
-                              />
+                              />}
+                               {formData.projections !== 'Custom'&& <p className="pr-2">{formData.ceus}</p>}
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.ceu >
                                 selectedMember?.previousMonth?.ceu ? (
@@ -1787,6 +1813,7 @@ function App() {
                           <div>
                             <p className="font-semibold">Visitors</p>
                             <div className="flex items-center">
+                              {formData.projections === 'Custom'&&
                               <input
                                 type="number"
                                 name="Visitors"
@@ -1795,7 +1822,8 @@ function App() {
                                 className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
                                 min="0"
                                 readOnly={editable}
-                              />
+                              />}
+                              {formData.projections !== 'Custom'&&  <p className="pr-2">{formData.visitors}</p>  }
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.visitors >
                                 selectedMember?.previousMonth?.visitors ? (

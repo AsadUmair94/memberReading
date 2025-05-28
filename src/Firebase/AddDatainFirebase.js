@@ -20,7 +20,8 @@ const todayStr = new Date().toISOString().split("T")[0]; // "2025-05-27"
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
       console.log(` Found existing data for ${currentMonth}:`, doc.data());
-      return doc.data(); // or return doc if you want doc ID too
+      const newData=  doc.data();
+      return newData.data;// or return doc if you want doc ID too
     } else {
       console.log(`📭 No data found for month: ${currentMonth}`);
       return false;
