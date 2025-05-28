@@ -933,16 +933,9 @@ function App() {
                             <p className="font-semibold">Attendance</p>
                             <p>Present</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="present"
-                                value={formData.present}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                max="5"
-                                readOnly={editable}
-                              />
+
+
+                              <p className="pr-2">{formData.present}</p>
                               <p className="whitespace-nowrap">
                                 of {Number(getWednesdaysInMonth("03/2025"))}
                               </p>
@@ -953,15 +946,8 @@ function App() {
                             <p className="font-semibold">Referrals</p>
                             <p className="flex items-center gap-1">RGO:</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="rgo"
-                                value={formData.rgo}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
+
+                              <p className="pr-2">{formData.rgo}</p>
                               {/* <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600" : "text-red-600"}> */}
                               <span className="flex items-center gap-1">
                                 {selectedMember?.currentMonth?.rgo >
@@ -979,15 +965,7 @@ function App() {
 
                             <p className="flex items-center gap-1">RGI:</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="rgi"
-                                value={formData.rgi}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
+                              <p className="pr-2">{formData.rgi}</p>
                               {/* <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600" : "text-red-600"}> */}
                               <span className="flex items-center gap-1">
                                 {selectedMember?.currentMonth?.rgi >
@@ -1008,17 +986,7 @@ function App() {
                             <p className="font-semibold">1-2-1s</p>
                             <div className="flex items-center">
 
-                              <input
-                                type="number"
-                                name="one2ones"
-                                value={formData.one2ones}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-
-
-                              />
+                              <p className="pr-2">{formData.one2ones}</p>
 
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.oneToOnes >
@@ -1038,16 +1006,7 @@ function App() {
                           <div>
                             <p className="font-semibold">CEUs</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="ceu"
-                                value={formData.ceus}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
-
+                              <p className="pr-2">{formData.ceus}</p>
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.ceu >
                                   selectedMember?.previousMonth?.ceu ? (
@@ -1066,15 +1025,7 @@ function App() {
                           <div>
                             <p className="font-semibold">Visitors</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="Visitors"
-                                value={formData.visitors}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
+                              <p className="pr-2">{formData.visitors}</p>
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.visitors >
                                   selectedMember?.previousMonth?.visitors ? (
@@ -1289,16 +1240,7 @@ function App() {
                             <p className="font-semibold">Attendance</p>
                             <p>Present</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="present"
-                                value={formData.present}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                max="5"
-                                readOnly={editable}
-                              />
+                              <p className="pr-2">{formData.presents}</p>
                               <p className="whitespace-nowrap">
                                 of {Number(getWednesdaysInMonth("03/2025"))}
                               </p>
@@ -1309,15 +1251,7 @@ function App() {
                             <p className="font-semibold">Referrals</p>
                             <p className="flex items-center gap-1">
                               RGO:
-                              <input
-                                type="number"
-                                name="rgo"
-                                value={formData.rgo}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
+                              <p className="pr-2">{formData.rgo}</p>
                               <span
                                 className={
                                   selectedMember?.currentMonth?.rgo >
@@ -1341,15 +1275,7 @@ function App() {
 
                             <p className="flex items-center gap-1">
                               RGI:
-                              <input
-                                type="number"
-                                name="rgi"
-                                value={formData.rgi}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
+                              <p className="pr-2">{formData.rgi}</p>
                               <span
                                 className={
                                   selectedMember?.currentMonth?.rgi >
@@ -1375,15 +1301,7 @@ function App() {
                           <div>
                             <p className="font-semibold">1-2-1s</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="one2ones"
-                                value={formData.one2ones}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
+                              <p className="pr-2">{formData.one2ones}</p>
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.oneToOnes >
                                   selectedMember?.previousMonth?.oneToOnes ? (
@@ -1402,15 +1320,7 @@ function App() {
                           <div>
                             <p className="font-semibold">CEUs</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="ceu"
-                                value={formData.ceus}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
+                              <p className="pr-2">{formData.ceus}</p>
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.ceu >
                                   selectedMember?.previousMonth?.ceu ? (
@@ -1429,15 +1339,7 @@ function App() {
                           <div>
                             <p className="font-semibold">Visitors</p>
                             <div className="flex items-center">
-                              <input
-                                type="number"
-                                name="Visitors"
-                                value={formData.visitors}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />
+                              <p className="pr-2">{formData.visitors}</p>
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.visitors >
                                   selectedMember?.previousMonth?.visitors ? (
