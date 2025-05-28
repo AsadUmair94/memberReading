@@ -23,14 +23,26 @@ function App() {
   const [availableMonths, setAvailableMonths] = useState([]);
   const [documentFirebase, setDocumentFirebase] = useState('');
 
-  const [referralsExtraSheet, setReferralsExtraSheet] = useState();
-  const [visitorsExtraSheet, setVisitorsExtraSheet] = useState();
-  const [one2onesExtraSheet, setOne2onesExtraSheet] = useState();
-  const [ceusExtraSheet, setCeusExtraSheet] = useState();
-  const [presentExtraSheet, setPresentExtraSheet] = useState();
-  const [lateExtraSheet, setLateExtraSheet] = useState();
-  const [medicalExtraSheet, setMedicalExtraSheet] = useState();
-  const [substitutesExtraSheet, setSubstitutesExtraSheet] = useState();
+  const [attendanceFutureScore, setAttendanceFutureScore] = useState();
+  const [referralFutureScore, setReferralFutureScore] = useState();
+  const [visitorsFutureScore, setVisitorsFutureScore] = useState();
+  const [one2onesFutureScore, setOne2onesFutureScore] = useState();
+  const [ceusFutureScore, setCeusFutureScore] = useState();
+  const [totalMeetingsFuture, setTotalMeetingsFuture] = useState();
+
+
+  const [lateFuture, setLateFuture] = useState();
+  const [presentsFuture, setPresentsFuture] = useState();
+  const [substitutesFuture, setSubstitutesFuture] = useState();
+  const [medicalFuture, setMedicalFuture] = useState();
+
+
+  const [totalonetooneFuture, setTotalonetooneFuture] = useState();
+  const [totalCeusFuture, setTotalCeusFuture] = useState();
+  const [totalRgiFuture, setTotalRgiFuture] = useState();
+  const [totalRgoFuture, setTotalRgoFuture] = useState();
+  const [totalVisitorsFuture, setTotalVisitorsFuture] = useState();
+
 
   const [formData, setFormData] = useState({
     projections: "Next Level",
@@ -45,7 +57,7 @@ function App() {
     visitors: false,
   });
 
-  console.log('===========>', documentFirebase,)
+
 
   const monthNames = [
     "January",
@@ -276,44 +288,65 @@ function App() {
     }
   };
   const handleChange = async (event) => {
+    alert('handleChange')
     const value = event.target.value;
+
+    var statusOfMonth = availableMonths.filter((item) => item.value == selectedMonth);
 
     if (value != "member_sheet") {
       after_six_month_calculations.forEach((element) => {
         if (element.memberName == value) {
           setSelectedMember(element);
           console.log(element);
+          setTotalScoreCustom(element.currentScore);
 
-          // if (element.levelName == 'Green') {
-          //   setFormData(prev => ({
-          //     ...prev,
-          //     projections: "Maximum",
-          //     present: element.improvementsNeeded.toImprove.attendance,
-          //     late: 0,
-          //     substitutes: 0,
-          //     medical: 0,
-          //     rgo: element.improvementsNeeded.toImprove.referrals,
-          //     rgi: 0,
-          //     one2ones: element.improvementsNeeded.toImprove.oneToOnes,
-          //     ceus: element.improvementsNeeded.toImprove.attendance,
-          //     visitors: element.improvementsNeeded.toImprove.visitors,
-          //   }));
-          // }
-          // if (element.levelName != 'Green') {
-          //   setFormData(prev => ({
-          //     ...prev,
-          //     projections: "Next Level",
-          //     present: element.improvementsNeeded.toNextLevel.attendance,
-          //     late: 0,
-          //     substitutes: 0,
-          //     medical: 0,
-          //     rgo: element.improvementsNeeded.toNextLevel.referrals,
-          //     rgi: 0,
-          //     one2ones: element.improvementsNeeded.toNextLevel.oneToOnes,
-          //     ceus: element.improvementsNeeded.toNextLevel.attendance,
-          //     visitors: element.improvementsNeeded.toNextLevel.visitors,
-          //   }));
-          // }
+          if (statusOfMonth[0].status == 'passed') {
+            setFormData(prev => ({
+              ...prev,
+              projections: "Next Level",
+              present: element?.currentMonth?.presents,
+              late: element?.currentMonth?.late,
+              substitutes: element?.currentMonth?.substitutes,
+              medical: element?.currentMonth?.medical,
+              rgo: element?.currentMonth?.rgo,
+              rgi: element?.currentMonth?.rgi,
+              one2ones: element?.currentMonth?.oneToOnes,
+              ceus: element?.currentMonth?.ceu,
+              visitors: element?.currentMonth?.visitors,
+            }));
+          }
+          if (statusOfMonth[0].status == 'present') {
+            setFormData(prev => ({
+              ...prev,
+              projections: "Next Level",
+              present: element.improvementsExtraSheet.last_month_extra_sheet.presents,
+              late: element.improvementsExtraSheet.last_month_extra_sheet.late,
+              substitutes: element.improvementsExtraSheet.last_month_extra_sheet.substitutes,
+              medical: element.improvementsExtraSheet.last_month_extra_sheet.medical,
+              rgo: element.improvementsExtraSheet.last_month_extra_sheet.rgo,
+              rgi: element.improvementsExtraSheet.last_month_extra_sheet.rgi,
+              one2ones: element.improvementsExtraSheet.last_month_extra_sheet.oneToOnes,
+              ceus: element.improvementsExtraSheet.last_month_extra_sheet.ceus,
+              visitors: element.improvementsExtraSheet.last_month_extra_sheet.visitors,
+            }));
+          }
+          if (statusOfMonth[0].status == 'future') {
+            calculateCustomScore("future", element, '');
+            // setFormData(prev => ({
+            //   ...prev,
+            //   projections: "Next Level",
+            //   present: element.improvementsExtraSheet.toNextLevel.attendance,
+            //   late: 0,
+            //   substitutes: 0,
+            //   medical: 0,
+            //   rgo: element.improvementsExtraSheet.toNextLevel.referrals,
+            //   rgi: 0,
+            //   one2ones: element.improvementsExtraSheet.toNextLevel.oneToOnes,
+            //   ceus: element.improvementsExtraSheet.toNextLevel.attendance,
+            //   visitors: element.improvementsExtraSheet.toNextLevel.visitors,
+            // }));
+          }
+
         }
       });
     } else {
@@ -324,7 +357,7 @@ function App() {
   useEffect(async () => {
     setAvailableMonths(getStatusMonths());
     var months = await getStatusMonths();
-
+    //getDataFromN8n(months);
     const data = await checkMonthlyDataExists(setDocumentFirebase);
     if (!data) {
       getDataFromN8n(months);
@@ -346,54 +379,73 @@ function App() {
 
   const handleChangeFormdata = (e) => {
     const { name, value, type } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: type === "number" ? parseInt(value || "0") : value,
-    }));
-    if (value == "Custom") {
-      setActiveTabProjections(value);
-      setEditable(false);
+    // if (returnStatus() != 'future') {
+    //   alert('handleChangeFormdata not future')
+    //   const { name, value, type } = e.target;
+    //   setFormData((prevState) => ({
+    //     ...prevState,
+    //     [name]: type === "number" ? parseInt(value || "0") : value,
+    //   }));
+
+    //   if (value == "Custom") {
+    //     setActiveTabProjections(value);
+    //     setEditable(false);
+    //   }
+    //   if (value == "Next Level") {
+    //     setActiveTabProjections(value);
+    //     setEditable(true);
+    //     setFormData({
+    //       projections: "Next Level",
+    //       present: selectedMember.improvementsExtraSheet.toNextLevel.attendance,
+    //       late: 0,
+    //       substitutes: 0,
+    //       medical: 0,
+    //       rgo: 0,
+    //       rgi: selectedMember.improvementsExtraSheet.toNextLevel.referrals,
+    //       one2ones: selectedMember.improvementsExtraSheet.toNextLevel.oneToOnes,
+    //       ceus: selectedMember.improvementsExtraSheet.toNextLevel.ceus,
+    //       visitors: selectedMember.improvementsExtraSheet.toNextLevel.visitors,
+    //     });
+    //     setTotalScoreCustom(
+    //       Number(selectedMember.improvementsExtraSheet.pointsToNextLevel) +
+    //       Number(selectedMember.currentScore)
+    //     );
+    //   }
+    //   if (value == "Green") {
+    //     setActiveTabProjections(value);
+    //     setEditable(true);
+    //     setFormData({
+    //       projections: "Green",
+    //       present: selectedMember.improvementsExtraSheet.toGreen.attendance,
+    //       late: 0,
+    //       substitutes: 0,
+    //       medical: 0,
+    //       rgo: 0,
+    //       rgi: selectedMember.improvementsExtraSheet.toGreen.referrals,
+    //       one2ones: selectedMember.improvementsExtraSheet.toGreen.oneToOnes,
+    //       ceus: selectedMember.improvementsExtraSheet.toGreen.ceus,
+    //       visitors: selectedMember.improvementsExtraSheet.toGreen.visitors,
+    //     });
+    //   }
+    //   if (value == "Maximum") {
+    //     setActiveTabProjections(value);
+    //     setEditable(true);
+    //   }
+    // }
+    if (returnStatus() == 'future') {
+
+      if (value == 'Next Level') {
+        calculateCustomScore('future', selectedMember, value);
+      }
+      if (value == 'Green') {
+        calculateCustomScore('future', selectedMember, value);
+      }
+      if (value == 'Custom') {
+        calculateCustomScore('future', selectedMember, value);
+      }
+
     }
-    if (value == "Next Level") {
-      setActiveTabProjections(value);
-      setEditable(true);
-      setFormData({
-        projections: "Next Level",
-        present: selectedMember.improvementsExtraSheet.toNextLevel.attendance,
-        late: 0,
-        substitutes: 0,
-        medical: 0,
-        rgo: 0,
-        rgi: selectedMember.improvementsExtraSheet.toNextLevel.referrals,
-        one2ones: selectedMember.improvementsExtraSheet.toNextLevel.oneToOnes,
-        ceus: selectedMember.improvementsExtraSheet.toNextLevel.ceus,
-        visitors: selectedMember.improvementsExtraSheet.toNextLevel.visitors,
-      });
-      setTotalScoreCustom(
-        Number(selectedMember.improvementsExtraSheet.pointsToNextLevel) +
-        Number(selectedMember.currentScore)
-      );
-    }
-    if (value == "Green") {
-      setActiveTabProjections(value);
-      setEditable(true);
-      setFormData({
-        projections: "Green",
-        present: selectedMember.improvementsExtraSheet.toGreen.attendance,
-        late: 0,
-        substitutes: 0,
-        medical: 0,
-        rgo: 0,
-        rgi: selectedMember.improvementsExtraSheet.toGreen.referrals,
-        one2ones: selectedMember.improvementsExtraSheet.toGreen.oneToOnes,
-        ceus: selectedMember.improvementsExtraSheet.toGreen.ceus,
-        visitors: selectedMember.improvementsExtraSheet.toGreen.visitors,
-      });
-    }
-    if (value == "Maximum") {
-      setActiveTabProjections(value);
-      setEditable(true);
-    }
+
   };
   const getNextScore = () => {
     if (activeTabProjections != "Custom") {
@@ -411,7 +463,42 @@ function App() {
       return totalScoreCustom;
     }
   };
-  const calculateCustomScore = (type, member) => {
+  const getCustomPointsAttendance = (present, substitutes, late) => {
+
+    var meeting = 25 - Number(substitutes);
+    return getAttendancePoints(
+      present,
+      substitutes,
+      late,
+      meeting
+    );
+
+  }
+  const getCustomPoints = (val1, val2, type, weeksInPeriod) => {
+
+
+    var total = Number(val1) + Number(val2);
+    if (type == 'ref') {
+      var referralsPerWeek = weeksInPeriod ? total / weeksInPeriod : 0;
+      return getReferralPoints(referralsPerWeek)
+    }
+    if (type == 'visitor') {
+      var referralsPerWeek = weeksInPeriod ? total / weeksInPeriod : 0;
+      return getVisitorPoints(referralsPerWeek)
+    }
+    if (type == 'onetoone') {
+      var referralsPerWeek = weeksInPeriod ? total / weeksInPeriod : 0;
+      return get121Points(referralsPerWeek)
+    }
+
+    if (type == 'ceus') {
+      var referralsPerWeek = weeksInPeriod ? total / weeksInPeriod : 0;
+      return getCEUPoints(referralsPerWeek)
+    }
+  }
+  const calculateCustomScore = (type, member, value) => {
+
+
     console.log(member);
     const date = new Date(member?.currentMetrics?.currentDate);
     const month = date.getMonth() + 1; // getMonth() returns 0-based index
@@ -519,26 +606,168 @@ function App() {
       setTotalScoreCustom(member.extraSheetValues.totalScoreExtraSheet);
     }
 
-    if (type == "future") {
+    if (type == "future" && value == 'Next Level') {
+
       setEditable(true);
-      if (member.currentLevel != 4) {
-        setFormData({
-          projections: "Next Level",
-          present: member.improvementsExtraSheet.toNextLevel.attendance,
-          late: 0,
-          substitutes: 0,
-          medical: 0,
-          rgo: 0,
-          rgi: member.improvementsExtraSheet.toNextLevel.referrals,
-          one2ones: member.improvementsExtraSheet.toNextLevel.oneToOnes,
-          ceus: member.improvementsExtraSheet.toNextLevel.ceus,
-          visitors: member.improvementsExtraSheet.toNextLevel.visitors,
-        });
-        setTotalScoreCustom(
-          Number(member.improvementsExtraSheet.pointsToNextLevel) +
-          Number(member.currentScore)
-        );
-      }
+      setFormData({
+        projections: "Next Level",
+        present: member.improvementsExtraSheet.toNextLevel.attendance,
+        late: 0,
+        substitutes: 0,
+        medical: 0,
+        rgo: 0,
+        rgi: member.improvementsExtraSheet.toNextLevel.referrals,
+        one2ones: member.improvementsExtraSheet.toNextLevel.oneToOnes,
+        ceus: member.improvementsExtraSheet.toNextLevel.ceus,
+        visitors: member.improvementsExtraSheet.toNextLevel.visitors,
+      });
+      setTotalScoreCustom(
+        Number(member.improvementsExtraSheet.pointsToNextLevel) +
+        Number(member.currentScore)
+      );
+
+
+      var total_meeting = Number(member.improvementsExtraSheet.weeksActiveFiveMonths) - Number(member.improvementsNeeded.extraSheetValuesFiveMonth.totalSubstitutesFiveMonthsExtraSheet);
+      total_meeting = Number(total_meeting) - Number(member.improvementsNeeded.extraSheetValuesFiveMonth.totalMedicalFiveMonthsExtraSheet);
+
+
+      setReferralFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.totalRef), Number(member.improvementsExtraSheet.toNextLevel.referrals), 'ref', total_meeting));
+      setVisitorsFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.visitors), Number(member.improvementsExtraSheet.toNextLevel.visitors), 'visitor', total_meeting));
+
+
+      setOne2onesFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.onetoone), Number(member.improvementsExtraSheet.toNextLevel.oneToOnes), 'onetoone', total_meeting));
+
+
+      setCeusFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.ceus), Number(member.improvementsExtraSheet.toNextLevel.ceus), 'ceus', total_meeting));
+
+
+      setAttendanceFutureScore(getCustomPointsAttendance(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.presents) + Number(member.improvementsExtraSheet.toNextLevel.attendance), member.improvementsExtraSheet.totalValues_after_next_sheet.substitutes, member.improvementsExtraSheet.totalValues_after_next_sheet.late));
+
+
+      setTotalMeetingsFuture(25);
+      setSubstitutesFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.substitutes)
+      setMedicalFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.medical)
+      setLateFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.late);
+      setPresentsFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.presents)
+
+      setTotalonetooneFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.onetoone) + Number(member.improvementsExtraSheet.toNextLevel.oneToOnes));
+
+      setTotalRgiFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.rgi);
+      setTotalRgoFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.rgo) + Number(member.improvementsExtraSheet.toNextLevel.referrals));
+
+      setTotalVisitorsFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.visitors) + Number(member.improvementsExtraSheet.toNextLevel.visitors))
+
+    }
+    if (type == "future" && value == 'Green') {
+
+      setEditable(true);
+
+
+      setEditable(true);
+      setFormData({
+        projections: "Green",
+        present: member.improvementsExtraSheet.toGreen.attendance,
+        late: 0,
+        substitutes: 0,
+        medical: 0,
+        rgo: 0,
+        rgi: member.improvementsExtraSheet.toGreen.referrals,
+        one2ones: member.improvementsExtraSheet.toGreen.oneToOnes,
+        ceus: member.improvementsExtraSheet.toGreen.ceus,
+        visitors: member.improvementsExtraSheet.toGreen.visitors,
+      });
+      setTotalScoreCustom(
+        Number(member.improvementsExtraSheet.pointsToNextLevel) +
+        Number(member.currentScore)
+      );
+
+
+      var total_meeting = Number(member.improvementsExtraSheet.weeksActiveFiveMonths) - Number(member.improvementsNeeded.extraSheetValuesFiveMonth.totalSubstitutesFiveMonthsExtraSheet);
+      total_meeting = Number(total_meeting) - Number(member.improvementsNeeded.extraSheetValuesFiveMonth.totalMedicalFiveMonthsExtraSheet);
+
+
+      setReferralFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.totalRef), Number(member.improvementsExtraSheet.toGreen.referrals), 'ref', total_meeting));
+      setVisitorsFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.visitors), Number(member.improvementsExtraSheet.toGreen.visitors), 'visitor', total_meeting));
+
+
+      setOne2onesFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.onetoone), Number(member.improvementsExtraSheet.toGreen.oneToOnes), 'onetoone', total_meeting));
+
+
+      setCeusFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.ceus), Number(member.improvementsExtraSheet.toGreen.ceus), 'ceus', total_meeting));
+
+
+      setAttendanceFutureScore(getCustomPointsAttendance(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.presents) + Number(member.improvementsExtraSheet.toGreen.attendance), member.improvementsExtraSheet.totalValues_after_next_sheet.substitutes, member.improvementsExtraSheet.totalValues_after_next_sheet.late));
+
+
+      setTotalMeetingsFuture(25);
+      setSubstitutesFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.substitutes)
+      setMedicalFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.medical)
+      setLateFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.late);
+      setPresentsFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.presents)
+
+      setTotalonetooneFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.onetoone) + Number(member.improvementsExtraSheet.toGreen.oneToOnes));
+
+      setTotalRgiFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.rgi);
+      setTotalRgoFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.rgo) + Number(member.improvementsExtraSheet.toGreen.referrals));
+
+      setTotalVisitorsFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.visitors) + Number(member.improvementsExtraSheet.toGreen.visitors))
+
+
+    }
+    if (type == "future" && value == 'Custom') {
+
+      setEditable(false);
+
+
+      setEditable(true);
+      setFormData({
+        projections: "Custom",
+        present: member.improvementsExtraSheet.toNextLevel.attendance,
+        late: 0,
+        substitutes: 0,
+        medical: 0,
+        rgo: 0,
+        rgi: member.improvementsExtraSheet.toNextLevel.referrals,
+        one2ones: member.improvementsExtraSheet.toNextLevel.oneToOnes,
+        ceus: member.improvementsExtraSheet.toNextLevel.ceus,
+        visitors: member.improvementsExtraSheet.toNextLevel.visitors,
+      });
+      setTotalScoreCustom(
+        Number(member.improvementsExtraSheet.pointsToNextLevel) +
+        Number(member.currentScore)
+      );
+
+
+      var total_meeting = Number(member.improvementsExtraSheet.weeksActiveFiveMonths) - Number(member.improvementsNeeded.extraSheetValuesFiveMonth.totalSubstitutesFiveMonthsExtraSheet);
+      total_meeting = Number(total_meeting) - Number(member.improvementsNeeded.extraSheetValuesFiveMonth.totalMedicalFiveMonthsExtraSheet);
+
+
+      setReferralFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.totalRef), Number(member.improvementsExtraSheet.toNextLevel.referrals), 'ref', total_meeting));
+      setVisitorsFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.visitors), Number(member.improvementsExtraSheet.toNextLevel.visitors), 'visitor', total_meeting));
+
+
+      setOne2onesFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.onetoone), Number(member.improvementsExtraSheet.toNextLevel.oneToOnes), 'onetoone', total_meeting));
+
+
+      setCeusFutureScore(getCustomPoints(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.ceus), Number(member.improvementsExtraSheet.toNextLevel.ceus), 'ceus', total_meeting));
+
+
+      setAttendanceFutureScore(getCustomPointsAttendance(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.presents) + Number(member.improvementsExtraSheet.toNextLevel.attendance), member.improvementsExtraSheet.totalValues_after_next_sheet.substitutes, member.improvementsExtraSheet.totalValues_after_next_sheet.late));
+
+
+      setTotalMeetingsFuture(25);
+      setSubstitutesFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.substitutes)
+      setMedicalFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.medical)
+      setLateFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.late);
+      setPresentsFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.presents)
+
+      setTotalonetooneFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.onetoone) + Number(member.improvementsExtraSheet.toNextLevel.oneToOnes));
+
+      setTotalRgiFuture(member.improvementsExtraSheet.totalValues_after_next_sheet.rgi);
+      setTotalRgoFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.rgo) + Number(member.improvementsExtraSheet.toNextLevel.referrals));
+
+      setTotalVisitorsFuture(Number(member.improvementsExtraSheet.totalValues_after_next_sheet.visitors) + Number(member.improvementsExtraSheet.toNextLevel.visitors))
+
     }
   };
   const calculateScoreFuture = () => {
@@ -561,49 +790,59 @@ function App() {
         selectedMember.improvementsNeeded.extraSheetValuesFiveMonth
           .totalReferralsFiveMonthsExtraSheet
       );
+
     visitors =
       Number(visitors) +
       Number(
         selectedMember.improvementsNeeded.extraSheetValuesFiveMonth
           .totalVisitorsFiveMonthsExtraSheet
       );
+    setTotalVisitorsFuture(visitors)
     one2ones =
       Number(one2ones) +
       Number(
         selectedMember.improvementsNeeded.extraSheetValuesFiveMonth
           .total121sFiveMonthsExtraSheet
       );
+    setTotalonetooneFuture(one2ones);
+    setTotalRgiFuture(Number(selectedMember.improvementsExtraSheet.totalValues_after_next_sheet.rgi + Number(formData.rgi)));
+    setTotalRgoFuture(Number(selectedMember.improvementsExtraSheet.totalValues_after_next_sheet.rgo + Number(formData.rgo)));
+
     ceus =
       Number(ceus) +
       Number(
         selectedMember.improvementsNeeded.extraSheetValuesFiveMonth
           .totalCEUFiveMonthsExtraSheet
       );
+    setTotalCeusFuture(ceus)
     present =
       Number(present) +
       Number(
         selectedMember.improvementsNeeded.extraSheetValuesFiveMonth
           .totalPresentsFiveMonthsExtraSheet
       );
+    setPresentsFuture(present)
     late =
       Number(late) +
       Number(
         selectedMember.improvementsNeeded.extraSheetValuesFiveMonth
           .totalLatesFiveMonthsExtraSheet
       );
+    setLateFuture(late);
     medical =
       Number(medical) +
       Number(
         selectedMember.improvementsNeeded.extraSheetValuesFiveMonth
           .totalMedicalFiveMonthsExtraSheet
       );
+    setMedicalFuture(medical)
     substitutes =
       Number(substitutes) +
       Number(
         selectedMember.improvementsNeeded.extraSheetValuesFiveMonth
           .totalSubstitutesFiveMonthsExtraSheet
       );
-
+    setSubstitutesFuture(substitutes)
     var totalMeetings = getWednesdaysInMonth(month + "/" + year);
     totalMeetings =
       totalMeetings +
@@ -634,6 +873,13 @@ function App() {
       late,
       totalMeetings
     );
+    setReferralFutureScore(referralPoints);
+    setVisitorsFutureScore(visitorPoints);
+    setOne2onesFutureScore(oneToOnePoints);
+    setCeusFutureScore(ceuPoints);
+    setAttendanceFutureScore(attendancePoints);
+    setTotalMeetingsFuture(totalMeetings);
+
     const totalScore =
       attendancePoints +
       referralPoints +
@@ -654,6 +900,8 @@ function App() {
     return status[0].status;
   };
   const changeMonth = (monthValue, listMonths, selcted_member) => {
+
+
     var all_months;
     var member;
     if (listMonths) {
@@ -671,7 +919,7 @@ function App() {
     nowSelect = nowSelect[0];
     if (nowSelect.status == "present") {
       setEditable(true);
-      calculateCustomScore("present", member);
+      calculateCustomScore("present", member, '');
     }
     if (nowSelect.status == "passed") {
       setTotalScoreCustom(member?.currentScore);
@@ -692,7 +940,7 @@ function App() {
     }
     if (nowSelect.status == "future") {
       setEditable(false);
-      calculateCustomScore("future", member);
+      calculateCustomScore("future", member, '');
     }
     console.log(nowSelect);
   };
@@ -858,23 +1106,30 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-2  p-4 ">
-                <div className="text-[18px] font-bold text-gray-800">
-                  {selectedMonth} Score
+                <div className="text-[18px] font-bold text-gray-800 capitalize">
+                  {Math.floor(totalScoreCustom)} Score
                 </div>
-                <div className="text-[14px] text-black">{totalScoreCustom}</div>
-                <div class="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800"></div>
+                <div className="text-[14px] text-black">       {Math.floor(totalScoreCustom)}</div>
+                {selectedMember.levelName == 'Yellow' &&
+
+                  <div className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
+                }
+                {selectedMember.levelName == 'Green' &&
+                  <div className="flex items-center justify-center w-3 h-3 rounded-full bg-green-400 text-xs font-bold text-gray-800"></div>
+                }
+                {selectedMember.levelName == 'Gray' &&
+                  <div className="flex items-center justify-center w-3 h-3 rounded-full bg-gray-400 text-xs font-bold text-gray-800"></div>
+                }
+                {selectedMember.levelName == 'Red' &&
+                  <div className="flex items-center justify-center w-3 h-3 rounded-full bg-red-400 text-xs font-bold text-gray-800"></div>
+                }
+
                 <div className="flex items-center text-sm text-green-500">
                   <span className="font-medium">+10</span>
                   <span className="text-gray-500 ml-1">from last month</span>
                 </div>
               </div>
-              {/* <div className="text-left mb-4">
-              <div className="inline">
 
-
-                <strong>{selectedMonth} Score</strong> {totalScoreCustom} 10 from last month
-              </div>
-            </div> */}
               {selectedMember.length != 0 &&
                 selectedMonth &&
                 returnStatus() == "passed" &&
@@ -910,7 +1165,22 @@ function App() {
                           <p className="text-sm text-gray-700">Business Name</p>
                           <p className="text-sm text-gray-500 mt-1">Role(s)</p>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            {/* <span className="w-3 h-3 rounded-full bg-yellow-400"></span> */}
+
+
+                            {selectedMember.levelName == 'Yellow' &&
+
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
+                            }
+                            {selectedMember.levelName == 'Green' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-green-400 text-xs font-bold text-gray-800"></span>
+                            }
+                            {selectedMember.levelName == 'Gray' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-gray-400 text-xs font-bold text-gray-800"></span>
+                            }
+                            {selectedMember.levelName == 'Red' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-red-400 text-xs font-bold text-gray-800"></span>
+                            }
                             <span className="text-sm">
                               {selectedMember.powerTeam}
                             </span>
@@ -1218,7 +1488,19 @@ function App() {
                           <p className="text-sm text-gray-700">Business Name</p>
                           <p className="text-sm text-gray-500 mt-1">Role(s)</p>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            {selectedMember.levelName == 'Yellow' &&
+
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
+                            }
+                            {selectedMember.levelName == 'Green' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-green-400 text-xs font-bold text-gray-800"></span>
+                            }
+                            {selectedMember.levelName == 'Gray' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-gray-400 text-xs font-bold text-gray-800"></span>
+                            }
+                            {selectedMember.levelName == 'Red' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-red-400 text-xs font-bold text-gray-800"></span>
+                            }
                             <span className="text-sm">
                               {selectedMember.powerTeam}
                             </span>
@@ -1384,75 +1666,74 @@ function App() {
                           <div>
                             <p className="font-semibold text-[22px]">
                               Attendance:{" "}
-                              {selectedMember?.currentPoints?.attendance} points
+                              {selectedMember?.improvementsExtraSheet?.last_month_extra_sheet_points.attendance} points
                             </p>
                             <p>100%</p>
                             <p>
                               Present:{" "}
-                              {selectedMember?.currentMetrics
-                                ?.totalOfAllSixMonths?.totalPresents
-                                ? selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalPresents
+                              {selectedMember?.improvementsExtraSheet
+                                ?.totalValues_after_next_sheet?.presents
+                                ? selectedMember?.improvementsExtraSheet
+                                  ?.totalValues_after_next_sheet?.presents
                                 : 0}
                             </p>
                             <p>
                               Late:{" "}
-                              {selectedMember?.currentMetrics
-                                ?.totalOfAllSixMonths?.totalLates
-                                ? selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalLates
+                              {selectedMember?.improvementsExtraSheet
+                                ?.totalValues_after_next_sheet?.late
+                                ? selectedMember?.improvementsExtraSheet
+                                  ?.totalValues_after_next_sheet?.late
                                 : 0}
                             </p>
                             <p>
                               Substitutes:{" "}
-                              {selectedMember?.currentMetrics
-                                ?.totalOfAllSixMonths?.totalSubstitutes
-                                ? selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalSubstitutes
+                              {selectedMember?.improvementsExtraSheet
+                                ?.totalValues_after_next_sheet?.substitutes
+                                ? selectedMember?.improvementsExtraSheet
+                                  ?.totalValues_after_next_sheet?.substitutes
                                 : 0}
                             </p>
                             <p>
                               Medical:{" "}
-                              {selectedMember?.currentMetrics
-                                ?.totalOfAllSixMonths?.totalMedicalsLeaves
-                                ? selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalMedicalsLeaves
+                              {selectedMember?.improvementsExtraSheet
+                                ?.totalValues_after_next_sheet?.medical
+                                ? selectedMember?.improvementsExtraSheet
+                                  ?.totalValues_after_next_sheet?.medical
                                 : 0}
                             </p>
                           </div>
 
+
                           <div>
                             <p className="font-semibold">
                               Referrals:{" "}
-                              {selectedMember?.currentPoints?.referrals} points
+                              {selectedMember?.improvementsExtraSheet?.last_month_extra_sheet_points.referral} points
                             </p>
-                            <p>
+                            <p className=" flex items-center gap-1">
                               RGO:{" "}
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalReferralsSend
+                                selectedMember?.improvementsExtraSheet?.totalValues_after_next_sheet?.rgo
                               }{" "}
                               <FaArrowUp color="#3CCB3A" /> 10
                             </p>
-                            <p>
+                            <p className=" flex items-center gap-1">
                               RGI:{" "}
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalReferralsRecieved
+                                selectedMember?.improvementsExtraSheet?.totalValues_after_next_sheet?.rgi
                               }{" "}
                               <FaArrowUp color="#3CCB3A" /> 10
                             </p>
                           </div>
 
+
                           <div>
                             <p className="font-semibold">
-                              1-2-1s: {selectedMember?.currentPoints?.oneToOnes}{" "}
+                              1-2-1s: {selectedMember?.improvementsExtraSheet?.last_month_extra_sheet_points.onetoone}{" "}
                               points
                             </p>
-                            <p>
+                            <p className=" flex items-center gap-1">
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.total121s
+                                selectedMember?.improvementsExtraSheet?.totalValues_after_next_sheet?.onetoone
                               }{" "}
                               <FaArrowUp color="#3CCB3A" /> 10
                             </p>
@@ -1460,13 +1741,12 @@ function App() {
 
                           <div>
                             <p className="font-semibold">
-                              CEUs: {selectedMember?.currentPoints?.ceus} points
+                              CEUs: {selectedMember?.improvementsExtraSheet?.last_month_extra_sheet_points.ceus} points
                             </p>
-                            <p>
+                            <p className=" flex items-center gap-1">
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalCEU
-                              }{" "}
+                                selectedMember?.improvementsExtraSheet?.totalValues_after_next_sheet?.ceus
+                              }
                               <FaArrowUp color="#3CCB3A" /> 10
                             </p>
                           </div>
@@ -1474,14 +1754,14 @@ function App() {
                           <div>
                             <p className="font-semibold">
                               Visitors:{" "}
-                              {selectedMember?.currentPoints?.visitors} points
+                              {selectedMember?.improvementsExtraSheet?.last_month_extra_sheet_points.visitors} points
                             </p>
-                            <p>
+                            <p className=" flex items-center gap-1">
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalVisitors
+                                selectedMember?.improvementsExtraSheet?.totalValues_after_next_sheet.visitors
                               }{" "}
-                              <FaArrowUp color="#3CCB3A" /> 10
+                              <FaArrowUp color="#3CCB3A" />
+                              10
                             </p>
                           </div>
                         </div>
@@ -1531,7 +1811,19 @@ function App() {
                           <p className="text-sm text-gray-700">Business Name</p>
                           <p className="text-sm text-gray-500 mt-1">Role(s)</p>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            {selectedMember.levelName == 'Yellow' &&
+
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
+                            }
+                            {selectedMember.levelName == 'Green' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-green-400 text-xs font-bold text-gray-800"></span>
+                            }
+                            {selectedMember.levelName == 'Gray' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-gray-400 text-xs font-bold text-gray-800"></span>
+                            }
+                            {selectedMember.levelName == 'Red' &&
+                              <span className="flex items-center justify-center w-3 h-3 rounded-full bg-red-400 text-xs font-bold text-gray-800"></span>
+                            }
                             <span className="text-sm">
                               {selectedMember.powerTeam}
                             </span>
@@ -1555,10 +1847,10 @@ function App() {
                           >
                             <option value="Next Level">Next Level</option>
                             <option value="Green">Green</option>
-                            {selectedMember.improvementsExtraSheet?.toImprove
+                            {/* {selectedMember.improvementsExtraSheet?.toImprove
                               ?.attendance && (
                                 <option value="Maximum">Maximum</option>
-                              )}
+                              )} */}
 
                             <option value="Custom">Custom</option>
                           </select>
@@ -1578,7 +1870,7 @@ function App() {
                                   max="5"
                                   readOnly={editable}
                                 />}
-                              {formData.projections === 'Custom' && <p className="pr-2">{formData.present}</p>}
+                              {formData.projections != 'Custom' && <p className="pr-2">{formData.present}</p>}
                               <p className="whitespace-nowrap">
                                 of {Number(getWednesdaysInMonth("03/2025"))}
                               </p>
@@ -1600,7 +1892,7 @@ function App() {
                                   min="0"
                                   readOnly={editable}
                                 />}
-                              {formData.projections === 'Custom' && <p className="pr-2">{formData.rgo}</p>}
+                              {formData.projections != 'Custom' && <p className="pr-2">{formData.rgo}</p>}
                               <p
                                 className={
                                   selectedMember?.currentMonth?.rgo >
@@ -1636,7 +1928,7 @@ function App() {
                                     min="0"
                                     readOnly={editable}
                                   />}
-                                {formData.projections === 'Custom' && <p className="pr-2">{formData.rgi}</p>}
+                                {formData.projections != 'Custom' && <p className="pr-2">{formData.rgi}</p>}
                                 <p
                                   className={
                                     selectedMember?.currentMonth?.rgi >
@@ -1772,7 +2064,7 @@ function App() {
                           Future Score
                         </p>
                         <p className="text-4xl font-bold text-center mb-4">
-                          {totalScoreCustom}
+                          {Math.floor(totalScoreCustom)}
                         </p>
 
                         <div className="space-y-4">
@@ -1790,39 +2082,31 @@ function App() {
                           <div>
                             <p className="font-semibold text-[22px]">
                               Attendance:{" "}
-                              {selectedMember?.currentPoints?.attendance} points
+                              {attendanceFutureScore} points
                             </p>
                             <p>100%</p>
                             <p>
                               Present:{" "}
-                              {selectedMember?.currentMetrics
-                                ?.totalOfAllSixMonths?.totalPresents
-                                ? selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalPresents
+                              {presentsFuture
+                                ? presentsFuture
                                 : 0}
                             </p>
                             <p>
                               Late:{" "}
-                              {selectedMember?.currentMetrics
-                                ?.totalOfAllSixMonths?.totalLates
-                                ? selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalLates
+                              {lateFuture
+                                ? lateFuture
                                 : 0}
                             </p>
                             <p>
                               Substitutes:{" "}
-                              {selectedMember?.currentMetrics
-                                ?.totalOfAllSixMonths?.totalSubstitutes
-                                ? selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalSubstitutes
+                              {substitutesFuture
+                                ? substitutesFuture
                                 : 0}
                             </p>
                             <p>
                               Medical:{" "}
-                              {selectedMember?.currentMetrics
-                                ?.totalOfAllSixMonths?.totalMedicalsLeaves
-                                ? selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalMedicalsLeaves
+                              {medicalFuture
+                                ? medicalFuture
                                 : 0}
                             </p>
                           </div>
@@ -1830,35 +2114,33 @@ function App() {
                           <div>
                             <p className="font-semibold">
                               Referrals:{" "}
-                              {selectedMember?.currentPoints?.referrals} points
+                              {referralFutureScore} points
                             </p>
                             <p className="flex items-center gap-1">
                               RGO:{" "}
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalReferralsSend
+                                totalRgoFuture
                               }{" "}
                               <FaArrowUp color="#3CCB3A" /> 10
                             </p>
                             <p className="flex items-center gap-1">
                               RGI:{" "}
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalReferralsRecieved
+                                totalRgiFuture
                               }{" "}
                               <FaArrowUp color="#3CCB3A" /> 10
                             </p>
                           </div>
 
+
                           <div>
                             <p className="font-semibold">
-                              1-2-1s: {selectedMember?.currentPoints?.oneToOnes}{" "}
+                              1-2-1s: {one2onesFutureScore}{" "}
                               points
                             </p>
-                            <p className="flex items-center gap-1">
+                            <p className=" flex items-center gap-1">
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.total121s
+                                totalonetooneFuture
                               }{" "}
                               <FaArrowUp color="#3CCB3A" /> 10
                             </p>
@@ -1866,13 +2148,12 @@ function App() {
 
                           <div>
                             <p className="font-semibold">
-                              CEUs: {selectedMember?.currentPoints?.ceus} points
+                              CEUs: {ceusFutureScore} points
                             </p>
-                            <p className="flex items-center gap-1">
+                            <p className=" flex items-center gap-1">
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalCEU
-                              }{" "}
+                                totalCeusFuture
+                              }
                               <FaArrowUp color="#3CCB3A" /> 10
                             </p>
                           </div>
@@ -1880,14 +2161,14 @@ function App() {
                           <div>
                             <p className="font-semibold">
                               Visitors:{" "}
-                              {selectedMember?.currentPoints?.visitors} points
+                              {visitorsFutureScore} points
                             </p>
-                            <p className="flex items-center gap-1">
+                            <p className=" flex items-center gap-1">
                               {
-                                selectedMember?.currentMetrics
-                                  ?.totalOfAllSixMonths?.totalVisitors
+                                totalVisitorsFuture
                               }{" "}
-                              <FaArrowUp color="#3CCB3A" /> 10
+                              <FaArrowUp color="#3CCB3A" />
+                              10
                             </p>
                           </div>
                         </div>
