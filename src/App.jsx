@@ -45,7 +45,7 @@ function App() {
     visitors: false,
   });
 
-  console.log('===========>',documentFirebase,)
+  console.log('===========>', documentFirebase,)
 
   const monthNames = [
     "January",
@@ -216,14 +216,14 @@ function App() {
       var data = await res.json();
       // var newData = await res.json();
       //  console.log('=======>',data)
-        var newData = data.combinedData.memberAnalysis.memberAnalysis;
+      var newData = data.combinedData.memberAnalysis.memberAnalysis;
       const membersArray = Object.entries(newData).map(([name, data]) => ({
         member_name: name,
         memberName: name,
         ...data,
       }));
       setDocumentFirebase(data?.combinedData?.DocumentData?.output_markdown ?? '')
-   pushDataForDate({data:membersArray,document:data?.combinedData?.DocumentData?.output_markdown ?? '',});
+      pushDataForDate({ data: membersArray, document: data?.combinedData?.DocumentData?.output_markdown ?? '', });
       return membersArray; // return result after fetch is done
     } catch (error) {
       setLoader(false);
@@ -235,7 +235,7 @@ function App() {
   const getDataFromN8n = async (months) => {
     var all_mmbers = await getMemberTrends();
     console.log(all_mmbers);
- 
+
     setAfter_six_month_calculations(all_mmbers);
     var selectedOne = all_mmbers[0];
     setSelectedMember(selectedOne);
@@ -335,7 +335,7 @@ function App() {
       var selectedOne = data?.data[0];
       setSelectedMember(selectedOne);
       if (months) {
-      changeMonth(months[0].value, months, selectedOne);
+        changeMonth(months[0].value, months, selectedOne);
       }
       setEditable(true);
       // setTimeout(() => {
@@ -371,7 +371,7 @@ function App() {
       });
       setTotalScoreCustom(
         Number(selectedMember.improvementsExtraSheet.pointsToNextLevel) +
-          Number(selectedMember.currentScore)
+        Number(selectedMember.currentScore)
       );
     }
     if (value == "Green") {
@@ -536,7 +536,7 @@ function App() {
         });
         setTotalScoreCustom(
           Number(member.improvementsExtraSheet.pointsToNextLevel) +
-            Number(member.currentScore)
+          Number(member.currentScore)
         );
       }
     }
@@ -701,7 +701,7 @@ function App() {
   }, []);
 
 
-  console.log(formData.projections,'munafiq k mu mai hasbshi ka ')
+  console.log(formData.projections, 'munafiq k mu mai hasbshi ka ')
   return (
     <div className=" m-0 p-0">
       {loader && (
@@ -721,12 +721,12 @@ function App() {
           <div className="min-h-screen bg-red-700 p-6 w-full">
             <div
               className="bg-white w-full rounded-2xl p-6 shadow-lg"
-              // style={{
-              //   width:
-              //     selectedMember.length !== 0 &&
-              //     selectedMember === "member_sheet" &&
-              //     "61rem",
-              // }}
+            // style={{
+            //   width:
+            //     selectedMember.length !== 0 &&
+            //     selectedMember === "member_sheet" &&
+            //     "61rem",
+            // }}
             >
               {/* Top bar */}
               {/* <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
@@ -793,11 +793,12 @@ function App() {
                         <option key={index} value={member.memberName}>
                           {member.memberName}
                         </option>
-                        <option key="index" value="member_sheet">
-                          Chapter Analysis
-                        </option>
+
                       </>
                     ))}
+                    <option key="index" value="member_sheet">
+                      Chapter Analysis
+                    </option>
                   </select>
 
                   {selectedMember != "member_sheet" && (
@@ -964,7 +965,7 @@ function App() {
                               {/* <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600" : "text-red-600"}> */}
                               <span className="flex items-center gap-1">
                                 {selectedMember?.currentMonth?.rgo >
-                                selectedMember?.previousMonth?.rgo ? (
+                                  selectedMember?.previousMonth?.rgo ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -990,7 +991,7 @@ function App() {
                               {/* <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600" : "text-red-600"}> */}
                               <span className="flex items-center gap-1">
                                 {selectedMember?.currentMonth?.rgi >
-                                selectedMember?.previousMonth?.rgi ? (
+                                  selectedMember?.previousMonth?.rgi ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1006,7 +1007,7 @@ function App() {
                           <div>
                             <p className="font-semibold">1-2-1s</p>
                             <div className="flex items-center">
-                             
+
                               <input
                                 type="number"
                                 name="one2ones"
@@ -1016,12 +1017,12 @@ function App() {
                                 min="0"
                                 readOnly={editable}
 
-                                
+
                               />
-                             
+
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.oneToOnes >
-                                selectedMember?.previousMonth?.oneToOnes ? (
+                                  selectedMember?.previousMonth?.oneToOnes ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1049,7 +1050,7 @@ function App() {
 
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.ceu >
-                                selectedMember?.previousMonth?.ceu ? (
+                                  selectedMember?.previousMonth?.ceu ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1076,7 +1077,7 @@ function App() {
                               />
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.visitors >
-                                selectedMember?.previousMonth?.visitors ? (
+                                  selectedMember?.previousMonth?.visitors ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1126,7 +1127,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalPresents
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalPresents
+                                  ?.totalOfAllSixMonths?.totalPresents
                                 : 0}
                             </p>
                             <p>
@@ -1134,7 +1135,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalLates
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalLates
+                                  ?.totalOfAllSixMonths?.totalLates
                                 : 0}
                             </p>
                             <p>
@@ -1142,7 +1143,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalSubstitutes
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalSubstitutes
+                                  ?.totalOfAllSixMonths?.totalSubstitutes
                                 : 0}
                             </p>
                             <p>
@@ -1150,7 +1151,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalMedicalsLeaves
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalMedicalsLeaves
+                                  ?.totalOfAllSixMonths?.totalMedicalsLeaves
                                 : 0}
                             </p>
                           </div>
@@ -1320,13 +1321,13 @@ function App() {
                               <span
                                 className={
                                   selectedMember?.currentMonth?.rgo >
-                                  selectedMember?.previousMonth?.rgo
+                                    selectedMember?.previousMonth?.rgo
                                     ? "text-green-600 flex items-center gap-1"
                                     : "text-red-600 flex items-center gap-1"
                                 }
                               >
                                 {selectedMember?.currentMonth?.rgo >
-                                selectedMember?.previousMonth?.rgo ? (
+                                  selectedMember?.previousMonth?.rgo ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1352,13 +1353,13 @@ function App() {
                               <span
                                 className={
                                   selectedMember?.currentMonth?.rgi >
-                                  selectedMember?.previousMonth?.rgi
+                                    selectedMember?.previousMonth?.rgi
                                     ? "text-green-600 flex items-center gap-1"
                                     : "text-red-600 flex items-center gap-1"
                                 }
                               >
                                 {selectedMember?.currentMonth?.rgi >
-                                selectedMember?.previousMonth?.rgi ? (
+                                  selectedMember?.previousMonth?.rgi ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1385,7 +1386,7 @@ function App() {
                               />
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.oneToOnes >
-                                selectedMember?.previousMonth?.oneToOnes ? (
+                                  selectedMember?.previousMonth?.oneToOnes ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1412,7 +1413,7 @@ function App() {
                               />
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.ceu >
-                                selectedMember?.previousMonth?.ceu ? (
+                                  selectedMember?.previousMonth?.ceu ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1439,7 +1440,7 @@ function App() {
                               />
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.visitors >
-                                selectedMember?.previousMonth?.visitors ? (
+                                  selectedMember?.previousMonth?.visitors ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1489,7 +1490,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalPresents
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalPresents
+                                  ?.totalOfAllSixMonths?.totalPresents
                                 : 0}
                             </p>
                             <p>
@@ -1497,7 +1498,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalLates
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalLates
+                                  ?.totalOfAllSixMonths?.totalLates
                                 : 0}
                             </p>
                             <p>
@@ -1505,7 +1506,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalSubstitutes
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalSubstitutes
+                                  ?.totalOfAllSixMonths?.totalSubstitutes
                                 : 0}
                             </p>
                             <p>
@@ -1513,7 +1514,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalMedicalsLeaves
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalMedicalsLeaves
+                                  ?.totalOfAllSixMonths?.totalMedicalsLeaves
                                 : 0}
                             </p>
                           </div>
@@ -1654,8 +1655,8 @@ function App() {
                             <option value="Green">Green</option>
                             {selectedMember.improvementsExtraSheet?.toImprove
                               ?.attendance && (
-                              <option value="Maximum">Maximum</option>
-                            )}
+                                <option value="Maximum">Maximum</option>
+                              )}
 
                             <option value="Custom">Custom</option>
                           </select>
@@ -1664,18 +1665,18 @@ function App() {
                             <p className="font-semibold">Attendance</p>
                             <p>Present</p>
                             <div className="flex items-center">
-                              {formData.projections === 'Custom'&&
-                              <input
-                                type="number"
-                                name="present"
-                                value={formData.present}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                max="5"
-                                readOnly={editable}
-                              />}
-                              {formData.projections === 'Custom'&& <p className="pr-2">{formData.present}</p>}
+                              {formData.projections === 'Custom' &&
+                                <input
+                                  type="number"
+                                  name="present"
+                                  value={formData.present}
+                                  onChange={handleChangeFormdata}
+                                  className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                                  min="0"
+                                  max="5"
+                                  readOnly={editable}
+                                />}
+                              {formData.projections === 'Custom' && <p className="pr-2">{formData.present}</p>}
                               <p className="whitespace-nowrap">
                                 of {Number(getWednesdaysInMonth("03/2025"))}
                               </p>
@@ -1685,29 +1686,29 @@ function App() {
                           <div>
                             <p className="font-semibold">Referrals</p>
                             <p className="">
-                               RGO:</p>
-                              <div className="flex items-center">
-                             {formData.projections === 'Custom'&&
-                              <input
-                                type="number"
-                                name="rgo"
-                                value={formData.rgo}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />}
-                              {formData.projections === 'Custom'&& <p className="pr-2">{formData.rgo}</p>}
+                              RGO:</p>
+                            <div className="flex items-center">
+                              {formData.projections === 'Custom' &&
+                                <input
+                                  type="number"
+                                  name="rgo"
+                                  value={formData.rgo}
+                                  onChange={handleChangeFormdata}
+                                  className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                                  min="0"
+                                  readOnly={editable}
+                                />}
+                              {formData.projections === 'Custom' && <p className="pr-2">{formData.rgo}</p>}
                               <p
                                 className={
                                   selectedMember?.currentMonth?.rgo >
-                                  selectedMember?.previousMonth?.rgo
+                                    selectedMember?.previousMonth?.rgo
                                     ? "text-green-600 flex items-center gap-1"
                                     : "text-red-600 flex items-center gap-1"
                                 }
                               >
                                 {selectedMember?.currentMonth?.rgo >
-                                selectedMember?.previousMonth?.rgo ? (
+                                  selectedMember?.previousMonth?.rgo ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1720,61 +1721,61 @@ function App() {
                             </div>
                             <div>
 
-                            <p className="">
-                              RGI: </p>
+                              <p className="">
+                                RGI: </p>
                               <div className="flex items-center">
-                              {formData.projections === 'Custom'&&
-                              <input
-                                type="number"
-                                name="rgi"
-                                value={formData.rgi}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />}
-                              {formData.projections === 'Custom'&& <p className="pr-2">{formData.rgi}</p>}
-                              <p
-                                className={
-                                  selectedMember?.currentMonth?.rgi >
-                                  selectedMember?.previousMonth?.rgi
-                                    ? "text-green-600 flex items-center gap-1"
-                                    : "text-red-600 flex items-center gap-1"
-                                }
-                              >
-                                {selectedMember?.currentMonth?.rgi >
-                                selectedMember?.previousMonth?.rgi ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.rgi,
-                                  selectedMember?.previousMonth?.rgi
-                                )}
-                              </p>
+                                {formData.projections === 'Custom' &&
+                                  <input
+                                    type="number"
+                                    name="rgi"
+                                    value={formData.rgi}
+                                    onChange={handleChangeFormdata}
+                                    className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                                    min="0"
+                                    readOnly={editable}
+                                  />}
+                                {formData.projections === 'Custom' && <p className="pr-2">{formData.rgi}</p>}
+                                <p
+                                  className={
+                                    selectedMember?.currentMonth?.rgi >
+                                      selectedMember?.previousMonth?.rgi
+                                      ? "text-green-600 flex items-center gap-1"
+                                      : "text-red-600 flex items-center gap-1"
+                                  }
+                                >
+                                  {selectedMember?.currentMonth?.rgi >
+                                    selectedMember?.previousMonth?.rgi ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}
+                                  {substractReading(
+                                    selectedMember?.currentMonth?.rgi,
+                                    selectedMember?.previousMonth?.rgi
+                                  )}
+                                </p>
                               </div>
-                              </div>
-                            
+                            </div>
+
                           </div>
 
                           <div>
                             <p className="font-semibold">1-2-1s</p>
                             <div className="flex items-center">
-                               {formData.projections === 'Custom'&&
-                              <input
-                                type="number"
-                                name="one2ones"
-                                value={formData.one2ones}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />}
-                               {formData.projections !== 'Custom'&& <p className="pr-2">{formData.one2ones}</p>}
+                              {formData.projections === 'Custom' &&
+                                <input
+                                  type="number"
+                                  name="one2ones"
+                                  value={formData.one2ones}
+                                  onChange={handleChangeFormdata}
+                                  className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                                  min="0"
+                                  readOnly={editable}
+                                />}
+                              {formData.projections !== 'Custom' && <p className="pr-2">{formData.one2ones}</p>}
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.oneToOnes >
-                                selectedMember?.previousMonth?.oneToOnes ? (
+                                  selectedMember?.previousMonth?.oneToOnes ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1790,20 +1791,20 @@ function App() {
                           <div>
                             <p className="font-semibold">CEUs</p>
                             <div className="flex items-center">
-                              {formData.projections === 'Custom'&&
-                              <input
-                                type="number"
-                                name="ceu"
-                                value={formData.ceus}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />}
-                               {formData.projections !== 'Custom'&& <p className="pr-2">{formData.ceus}</p>}
+                              {formData.projections === 'Custom' &&
+                                <input
+                                  type="number"
+                                  name="ceu"
+                                  value={formData.ceus}
+                                  onChange={handleChangeFormdata}
+                                  className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                                  min="0"
+                                  readOnly={editable}
+                                />}
+                              {formData.projections !== 'Custom' && <p className="pr-2">{formData.ceus}</p>}
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.ceu >
-                                selectedMember?.previousMonth?.ceu ? (
+                                  selectedMember?.previousMonth?.ceu ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1819,20 +1820,20 @@ function App() {
                           <div>
                             <p className="font-semibold">Visitors</p>
                             <div className="flex items-center">
-                              {formData.projections === 'Custom'&&
-                              <input
-                                type="number"
-                                name="Visitors"
-                                value={formData.visitors}
-                                onChange={handleChangeFormdata}
-                                className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
-                                min="0"
-                                readOnly={editable}
-                              />}
-                              {formData.projections !== 'Custom'&&  <p className="pr-2">{formData.visitors}</p>  }
+                              {formData.projections === 'Custom' &&
+                                <input
+                                  type="number"
+                                  name="Visitors"
+                                  value={formData.visitors}
+                                  onChange={handleChangeFormdata}
+                                  className="border rounded w-16 p-1 mr-2 focus:outline-none focus:ring-0"
+                                  min="0"
+                                  readOnly={editable}
+                                />}
+                              {formData.projections !== 'Custom' && <p className="pr-2">{formData.visitors}</p>}
                               <p className="whitespace-nowrap flex items-center gap-1">
                                 {selectedMember?.currentMonth?.visitors >
-                                selectedMember?.previousMonth?.visitors ? (
+                                  selectedMember?.previousMonth?.visitors ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
@@ -1895,7 +1896,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalPresents
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalPresents
+                                  ?.totalOfAllSixMonths?.totalPresents
                                 : 0}
                             </p>
                             <p>
@@ -1903,7 +1904,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalLates
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalLates
+                                  ?.totalOfAllSixMonths?.totalLates
                                 : 0}
                             </p>
                             <p>
@@ -1911,7 +1912,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalSubstitutes
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalSubstitutes
+                                  ?.totalOfAllSixMonths?.totalSubstitutes
                                 : 0}
                             </p>
                             <p>
@@ -1919,7 +1920,7 @@ function App() {
                               {selectedMember?.currentMetrics
                                 ?.totalOfAllSixMonths?.totalMedicalsLeaves
                                 ? selectedMember?.currentMetrics
-                                    ?.totalOfAllSixMonths?.totalMedicalsLeaves
+                                  ?.totalOfAllSixMonths?.totalMedicalsLeaves
                                 : 0}
                             </p>
                           </div>
@@ -2014,12 +2015,12 @@ function App() {
                 //   <ReactMarkdown>{documentFirebase}</ReactMarkdown>}
                 // </div>
                 <div className="bg-white w-full rounded-2xl p-6 shadow-lg h-screen text-left">
-  <div className="h-full overflow-y-auto pr-4 make_mid">
-    {documentFirebase && (
-      <ReactMarkdown>{documentFirebase}</ReactMarkdown>
-    )}
-  </div>
-</div>
+                  <div className="h-full overflow-y-auto pr-4 make_mid">
+                    {documentFirebase && (
+                      <ReactMarkdown>{documentFirebase}</ReactMarkdown>
+                    )}
+                  </div>
+                </div>
               )}
           </div>
         </>
