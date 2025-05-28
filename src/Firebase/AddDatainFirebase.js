@@ -1,7 +1,7 @@
 import { collection, query, where, getDocs,doc,setDoc  } from "firebase/firestore";
 import { db } from "../../FirebaseConfig";
 
-export const checkMonthlyDataExists = async () => {
+export const checkMonthlyDataExists = async (setDocumentFirebase) => {
 const todayStr = new Date().toISOString().split("T")[0]; // "2025-05-27"
   const currentMonth = todayStr.slice(0, 7); // "2025-05"
 
@@ -21,6 +21,7 @@ const todayStr = new Date().toISOString().split("T")[0]; // "2025-05-27"
       const doc = querySnapshot.docs[0];
       console.log(` Found existing data for ${currentMonth}:`, doc.data());
       const newData=  doc.data();
+      setDocumentFirebase(newData.data.document)
       return newData.data;// or return doc if you want doc ID too
     } else {
       console.log(`📭 No data found for month: ${currentMonth}`);
@@ -33,13 +34,14 @@ const todayStr = new Date().toISOString().split("T")[0]; // "2025-05-27"
 };
 
 
-export const pushDataForDate = async ( data) => {
+export const pushDataForDate = async (data,setDocumentFirebase) => {
      const todayStr = new Date().toISOString().split("T")[0];
   const docRef = doc(db, "readings", todayStr);
 
   try {
     await setDoc(docRef, {data});
     console.log(" Data added for date:", todayStr, data);
+    setDocumentFirebase(data.document)
     return data;
   } catch (error) {
     console.error(" Error adding data:", error);

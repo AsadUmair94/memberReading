@@ -6,6 +6,8 @@ import {
   checkMonthlyDataExists,
   pushDataForDate,
 } from "./Firebase/AddDatainFirebase";
+import ReactMarkdown from "react-markdown";
+
 function App() {
   const [loader, setLoader] = useState(false);
   const [editable, setEditable] = useState(true);
@@ -19,6 +21,7 @@ function App() {
   const [activeTabProjections, setActiveTabProjections] =
     useState("Next Level");
   const [availableMonths, setAvailableMonths] = useState([]);
+  const [documentFirebase, setDocumentFirebase] = useState('');
 
   const [referralsExtraSheet, setReferralsExtraSheet] = useState();
   const [visitorsExtraSheet, setVisitorsExtraSheet] = useState();
@@ -41,6 +44,8 @@ function App() {
     ceus: false,
     visitors: false,
   });
+
+  console.log('===========>',documentFirebase,)
 
   const monthNames = [
     "January",
@@ -217,7 +222,8 @@ function App() {
         memberName: name,
         ...data,
       }));
-   pushDataForDate({data:membersArray,document:data?.combinedData?.DocumentData?.output_markdown ?? ''});
+      setDocumentFirebase(data?.combinedData?.DocumentData?.output_markdown ?? '')
+   pushDataForDate({data:membersArray,document:data?.combinedData?.DocumentData?.output_markdown ?? '',});
       return membersArray; // return result after fetch is done
     } catch (error) {
       setLoader(false);
@@ -319,7 +325,7 @@ function App() {
     setAvailableMonths(getStatusMonths());
     var months = await getStatusMonths();
 
-    const data = await checkMonthlyDataExists();
+    const data = await checkMonthlyDataExists(setDocumentFirebase);
     if (!data) {
       getDataFromN8n(months);
     } else {
@@ -715,12 +721,12 @@ function App() {
           <div className="min-h-screen bg-red-700 p-6 w-full">
             <div
               className="bg-white w-full rounded-2xl p-6 shadow-lg"
-              style={{
-                width:
-                  selectedMember.length !== 0 &&
-                  selectedMember === "member_sheet" &&
-                  "61rem",
-              }}
+              // style={{
+              //   width:
+              //     selectedMember.length !== 0 &&
+              //     selectedMember === "member_sheet" &&
+              //     "61rem",
+              // }}
             >
               {/* Top bar */}
               {/* <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
@@ -1997,14 +2003,23 @@ function App() {
 
             {selectedMember.length !== 0 &&
               selectedMember === "member_sheet" && (
-                <div className="bg-white w-full rounded-2xl p-6 shadow-lg h-screen">
-                  <iframe
-                    src="https://docs.google.com/document/d/1oHvSNGSPNIKZ_Tp_CNctxWElP2E1pP40lAgxIoKDrLQ/edit?pli=1&tab=t.0#heading=h.82mvvcpz6b4r"
-                    className="w-full h-full"
-                    frameBorder="0"
-                    title="Google Doc"
-                  ></iframe>
-                </div>
+                // <div className="bg-white w-full rounded-2xl p-6 shadow-lg h-screen text-left ">
+                //   {/* <iframe
+                //     src="https://docs.google.com/document/d/1oHvSNGSPNIKZ_Tp_CNctxWElP2E1pP40lAgxIoKDrLQ/edit?pli=1&tab=t.0#heading=h.82mvvcpz6b4r"
+                //     className="w-full h-full"
+                //     frameBorder="0"
+                //     title="Google Doc"
+                //   ></iframe> */}
+                //   {documentFirebase && 
+                //   <ReactMarkdown>{documentFirebase}</ReactMarkdown>}
+                // </div>
+                <div className="bg-white w-full rounded-2xl p-6 shadow-lg h-screen text-left">
+  <div className="h-full overflow-y-auto pr-4 make_mid">
+    {documentFirebase && (
+      <ReactMarkdown>{documentFirebase}</ReactMarkdown>
+    )}
+  </div>
+</div>
               )}
           </div>
         </>
