@@ -1890,80 +1890,141 @@ function App() {
                             </div>
                           </div>
 
-                          <div>
+                           <div>
                             <p className="font-semibold">Referrals</p>
-                            <p className="">
-                              RGO:</p>
-                            <div className="flex items-center">
-                              {formData.projections === 'Custom' &&
-                                <input
-                                  type="number"
-                                  name="rgo"
-                                  value={formData.rgo}
-                                  onChange={handleChangeFormdata}
-                                  className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                                  min="0"
-                                  readOnly={editable}
-                                />}
-                              {formData.projections != 'Custom' && <p className="pr-2">{formData.rgo}</p>}
-                              <p
-                                className={
-                                  selectedMember?.currentMonth?.rgo >
-                                    selectedMember?.previousMonth?.rgo
-                                    ? "text-green-600 flex items-center gap-1"
-                                    : "text-red-600 flex items-center gap-1"
-                                }
-                              >
-                                {selectedMember?.currentMonth?.rgo >
-                                  selectedMember?.previousMonth?.rgo ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.rgo,
-                                  selectedMember?.previousMonth?.rgo
-                                )}
-                              </p>
-                            </div>
-                            <div>
 
-                              <p className="">
-                                RGI: </p>
-                              <div className="flex items-center">
-                                {formData.projections === 'Custom' &&
-                                  <input
-                                    type="number"
-                                    name="rgi"
-                                    value={formData.rgi}
-                                    onChange={handleChangeFormdata}
-                                    className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
-                                    min="0"
-                                    readOnly={editable}
-                                  />}
-                                {formData.projections != 'Custom' && <p className="pr-2">{formData.rgi}</p>}
-                                <p
+                            {formData.projections !== "Custom" && (
+                              <p className="flex items-center gap-1">
+                                RGO:
+                                <p className="pr-2">{formData.rgo}</p>
+                                <span
                                   className={
-                                    selectedMember?.currentMonth?.rgi >
-                                      selectedMember?.previousMonth?.rgi
+                                    selectedMember?.currentMonth?.rgo >
+                                    selectedMember?.previousMonth?.rgo
                                       ? "text-green-600 flex items-center gap-1"
                                       : "text-red-600 flex items-center gap-1"
                                   }
                                 >
-                                  {selectedMember?.currentMonth?.rgi >
-                                    selectedMember?.previousMonth?.rgi ? (
+                                  {selectedMember?.currentMonth?.rgo >
+                                  selectedMember?.previousMonth?.rgo ? (
                                     <FaArrowUp color="#3CCB3A" />
                                   ) : (
                                     <FaArrowDown color="#C0192A" />
                                   )}
                                   {substractReading(
-                                    selectedMember?.currentMonth?.rgi,
-                                    selectedMember?.previousMonth?.rgi
+                                    selectedMember?.currentMonth?.rgo,
+                                    selectedMember?.previousMonth?.rgo
                                   )}
+                                </span>
+                              </p>
+                            )}
+                            {formData.projections === "Custom" && (
+                              <>
+                                <p className="">RGO: </p>
+                                <div className="flex items-center">
+                                  {formData.projections === "Custom" && (
+                                    <input
+                                      type="number"
+                                      name="rgo"
+                                      value={formData.rgo}
+                                      onChange={handleChangeFormdata}
+                                      className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                                      min="0"
+                                      readOnly={editable}
+                                    />
+                                  )}
+                                  {formData.projections != "Custom" && (
+                                    <p className="pr-2">{formData.rgo}</p>
+                                  )}
+                                  <p
+                                    className={
+                                      selectedMember?.currentMonth?.rgo >
+                                      selectedMember?.previousMonth?.rgo
+                                        ? "text-green-600 flex items-center gap-1"
+                                        : "text-red-600 flex items-center gap-1"
+                                    }
+                                  >
+                                    {selectedMember?.currentMonth?.rgo >
+                                    selectedMember?.previousMonth?.rgo ? (
+                                      <FaArrowUp color="#3CCB3A" />
+                                    ) : (
+                                      <FaArrowDown color="#C0192A" />
+                                    )}
+                                    {substractReading(
+                                      selectedMember?.currentMonth?.rgo,
+                                      selectedMember?.previousMonth?.rgo
+                                    )}
+                                  </p>
+                                </div>
+                              </>
+                            )}
+                            <div>
+                              {formData.projections !== "Custom" && (
+                                <p className="flex items-center gap-1">
+                                  RGO:
+                                  <p className="pr-2">{formData.rgi}</p>
+                                  <span
+                                    className={
+                                      selectedMember?.currentMonth?.rgi >
+                                      selectedMember?.previousMonth?.rgi
+                                        ? "text-green-600 flex items-center gap-1"
+                                        : "text-red-600 flex items-center gap-1"
+                                    }
+                                  >
+                                    {selectedMember?.currentMonth?.rgi >
+                                    selectedMember?.previousMonth?.rgi ? (
+                                      <FaArrowUp color="#3CCB3A" />
+                                    ) : (
+                                      <FaArrowDown color="#C0192A" />
+                                    )}
+                                    {substractReading(
+                                      selectedMember?.currentMonth?.rgi,
+                                      selectedMember?.previousMonth?.rgi
+                                    )}
+                                  </span>
                                 </p>
-                              </div>
+                              )}
+                              {formData.projections === "Custom" && (
+                                <>
+                                  <p className="">RGI: </p>
+                                  <div className="flex items-center">
+                                    {formData.projections === "Custom" && (
+                                      <input
+                                        type="number"
+                                        name="rgi"
+                                        value={formData.rgi}
+                                        onChange={handleChangeFormdata}
+                                        className="border rounded w-16 p-1 mx-1 focus:outline-none focus:ring-0"
+                                        min="0"
+                                        readOnly={editable}
+                                      />
+                                    )}
+                                    {formData.projections != "Custom" && (
+                                      <p className="pr-2">{formData.rgi}</p>
+                                    )}
+                                    <p
+                                      className={
+                                        selectedMember?.currentMonth?.rgi >
+                                        selectedMember?.previousMonth?.rgi
+                                          ? "text-green-600 flex items-center gap-1"
+                                          : "text-red-600 flex items-center gap-1"
+                                      }
+                                    >
+                                      {selectedMember?.currentMonth?.rgi >
+                                      selectedMember?.previousMonth?.rgi ? (
+                                        <FaArrowUp color="#3CCB3A" />
+                                      ) : (
+                                        <FaArrowDown color="#C0192A" />
+                                      )}
+                                      {substractReading(
+                                        selectedMember?.currentMonth?.rgi,
+                                        selectedMember?.previousMonth?.rgi
+                                      )}
+                                    </p>
+                                  </div>
+                                </>
+                              )}
                             </div>
-
                           </div>
 
                           <div>
