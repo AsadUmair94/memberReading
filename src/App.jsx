@@ -643,7 +643,6 @@ function App() {
         ceus: member.improvementsExtraSheet.toGreen.ceus,
         visitors: member.improvementsExtraSheet.toGreen.visitors,
       });
-      alert(member.improvementsExtraSheet.pointsToGreenLevel)
       setTotalScoreCustom(
         Number(member.improvementsExtraSheet.pointsToGreenLevel) +
         Number(member.currentScore)
@@ -1073,7 +1072,7 @@ function App() {
                 <div className="text-[18px] font-bold text-gray-800 capitalize">
                   {Math.floor(totalScoreCustom)} Score
                 </div>
-                <div className="text-[14px] text-black">       {Math.floor(totalScoreCustom)}</div>
+                {/* <div className="text-[14px] text-black">       {Math.floor(totalScoreCustom)}</div> */}
                 {getLevelColor() == 'Yellow' &&
 
                   <div className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
@@ -1128,8 +1127,7 @@ function App() {
                           </p>
                           <p className="text-sm text-gray-700">Business Name</p>
                           <p className="text-sm text-gray-500 mt-1">Role(s)</p>
-                          <div className="flex items-center gap-2 mt-1">
-                            {/* <span className="w-3 h-3 rounded-full bg-yellow-400"></span> */}
+                          {/* <div className="flex items-center gap-2 mt-1">
 
 
                             {getLevelColor() == 'Yellow' &&
@@ -1148,7 +1146,7 @@ function App() {
                             <span className="text-sm">
                               {selectedMember.powerTeam}
                             </span>
-                          </div>
+                          </div> */}
                         </div>
 
                         <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
@@ -1175,59 +1173,12 @@ function App() {
                               </p>
                             </div>
                           </div>
-                          {/* 
-                          <div>
-                            <p className="font-semibold">Referrals</p>
-                            <p className="flex items-center gap-1">RGO:</p>
-                            <div className="flex items-center">
-
-                              <p className="pr-2">{formData.rgo}</p>
-                              <span className="flex items-center gap-1">
-                                {selectedMember?.currentMonth?.rgo >
-                                  selectedMember?.previousMonth?.rgo ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.rgo,
-                                  selectedMember?.previousMonth?.rgo
-                                )}
-                              </span>
-                            </div>
-
-                            <p className="flex items-center gap-1">RGI:</p>
-                            <div className="flex items-center">
-                              <p className="pr-2">{formData.rgi}</p>
-                          
-                              <span className="flex items-center gap-1">
-                                {selectedMember?.currentMonth?.rgi >
-                                  selectedMember?.previousMonth?.rgi ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.rgi,
-                                  selectedMember?.previousMonth?.rgi
-                                )}
-                              </span>
-                            </div>
-                          </div> */}
-
                           <div>
                             <p className="font-semibold">Referrals</p>
                             <p className="flex items-center gap-1">
                               RGO:
                               <p className="pr-2">{formData.rgo}</p>
-                              <span
-                                className={
-                                  selectedMember?.currentMonth?.rgo >
-                                    selectedMember?.previousMonth?.rgo
-                                    ? "text-green-600 flex items-center gap-1"
-                                    : "text-red-600 flex items-center gap-1"
-                                }
-                              >
+                              <span className="flex items-center gap-1">
                                 {selectedMember?.currentMonth?.rgo >
                                   selectedMember?.previousMonth?.rgo ? (
                                   <FaArrowUp color="#3CCB3A" />
@@ -1244,14 +1195,7 @@ function App() {
                             <p className="flex items-center gap-1">
                               RGI:
                               <p className="pr-2">{formData.rgi}</p>
-                              <span
-                                className={
-                                  selectedMember?.currentMonth?.rgi >
-                                    selectedMember?.previousMonth?.rgi
-                                    ? "text-green-600 flex items-center gap-1"
-                                    : "text-red-600 flex items-center gap-1"
-                                }
-                              >
+                              <span className="flex items-center gap-1">
                                 {selectedMember?.currentMonth?.rgi >
                                   selectedMember?.previousMonth?.rgi ? (
                                   <FaArrowUp color="#3CCB3A" />
@@ -1501,7 +1445,7 @@ function App() {
                           </p>
                           <p className="text-sm text-gray-700">Business Name</p>
                           <p className="text-sm text-gray-500 mt-1">Role(s)</p>
-                          <div className="flex items-center gap-2 mt-1">
+                          {/* <div className="flex items-center gap-2 mt-1">
                             {getLevelColor() == 'Yellow' &&
 
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
@@ -1518,7 +1462,7 @@ function App() {
                             <span className="text-sm">
                               {selectedMember.powerTeam}
                             </span>
-                          </div>
+                          </div> */}
                         </div>
 
                         <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
@@ -1824,7 +1768,7 @@ function App() {
                           </p>
                           <p className="text-sm text-gray-700">Business Name</p>
                           <p className="text-sm text-gray-500 mt-1">Role(s)</p>
-                          <div className="flex items-center gap-2 mt-1">
+                          {/* <div className="flex items-center gap-2 mt-1">
                             {getLevelColor() == 'Yellow' &&
 
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
@@ -1841,7 +1785,7 @@ function App() {
                             <span className="text-sm">
                               {selectedMember.powerTeam}
                             </span>
-                          </div>
+                          </div> */}
                         </div>
 
                         <div className="bg-gray-100 p-4 rounded-xl text-left text-sm space-y-2">
