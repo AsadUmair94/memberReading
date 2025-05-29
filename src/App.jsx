@@ -644,7 +644,7 @@ function App() {
         visitors: member.improvementsExtraSheet.toGreen.visitors,
       });
       setTotalScoreCustom(
-        Number(member.improvementsExtraSheet.pointsToNextLevel) +
+        Number(member.improvementsExtraSheet.pointsToGreenLevel) +
         Number(member.currentScore)
       );
 
@@ -1859,11 +1859,13 @@ function App() {
                             className="border p-2 w-full rounded shadow-sm focus:outline-none focus:ring-0 "
                           >
                             <option value="Next Level">Next Level</option>
-                            <option value="Green">Green</option>
-                            {/* {selectedMember.improvementsExtraSheet?.toImprove
+                            {selectedMember.improvementsExtraSheet?.toGreen?.attendance &&
+                              <option value="Green">Green</option>
+                            }
+                            {selectedMember.improvementsExtraSheet?.toImprove
                               ?.attendance && (
                                 <option value="Maximum">Maximum</option>
-                              )} */}
+                              )}
 
                             <option value="Custom">Custom</option>
                           </select>
@@ -1890,7 +1892,7 @@ function App() {
                             </div>
                           </div>
 
-                           <div>
+                          <div>
                             <p className="font-semibold">Referrals</p>
 
                             {formData.projections !== "Custom" && (
@@ -1900,13 +1902,13 @@ function App() {
                                 <span
                                   className={
                                     selectedMember?.currentMonth?.rgo >
-                                    selectedMember?.previousMonth?.rgo
+                                      selectedMember?.previousMonth?.rgo
                                       ? "text-green-600 flex items-center gap-1"
                                       : "text-red-600 flex items-center gap-1"
                                   }
                                 >
                                   {selectedMember?.currentMonth?.rgo >
-                                  selectedMember?.previousMonth?.rgo ? (
+                                    selectedMember?.previousMonth?.rgo ? (
                                     <FaArrowUp color="#3CCB3A" />
                                   ) : (
                                     <FaArrowDown color="#C0192A" />
@@ -1939,13 +1941,13 @@ function App() {
                                   <p
                                     className={
                                       selectedMember?.currentMonth?.rgo >
-                                      selectedMember?.previousMonth?.rgo
+                                        selectedMember?.previousMonth?.rgo
                                         ? "text-green-600 flex items-center gap-1"
                                         : "text-red-600 flex items-center gap-1"
                                     }
                                   >
                                     {selectedMember?.currentMonth?.rgo >
-                                    selectedMember?.previousMonth?.rgo ? (
+                                      selectedMember?.previousMonth?.rgo ? (
                                       <FaArrowUp color="#3CCB3A" />
                                     ) : (
                                       <FaArrowDown color="#C0192A" />
@@ -1966,13 +1968,13 @@ function App() {
                                   <span
                                     className={
                                       selectedMember?.currentMonth?.rgi >
-                                      selectedMember?.previousMonth?.rgi
+                                        selectedMember?.previousMonth?.rgi
                                         ? "text-green-600 flex items-center gap-1"
                                         : "text-red-600 flex items-center gap-1"
                                     }
                                   >
                                     {selectedMember?.currentMonth?.rgi >
-                                    selectedMember?.previousMonth?.rgi ? (
+                                      selectedMember?.previousMonth?.rgi ? (
                                       <FaArrowUp color="#3CCB3A" />
                                     ) : (
                                       <FaArrowDown color="#C0192A" />
@@ -2005,13 +2007,13 @@ function App() {
                                     <p
                                       className={
                                         selectedMember?.currentMonth?.rgi >
-                                        selectedMember?.previousMonth?.rgi
+                                          selectedMember?.previousMonth?.rgi
                                           ? "text-green-600 flex items-center gap-1"
                                           : "text-red-600 flex items-center gap-1"
                                       }
                                     >
                                       {selectedMember?.currentMonth?.rgi >
-                                      selectedMember?.previousMonth?.rgi ? (
+                                        selectedMember?.previousMonth?.rgi ? (
                                         <FaArrowUp color="#3CCB3A" />
                                       ) : (
                                         <FaArrowDown color="#C0192A" />
