@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import ModalWithLoader from "./ModalWithLoader/ModalWithLoader";
-import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown, FaUnderline } from "react-icons/fa";
 import {
   checkMonthlyDataExists,
   pushDataForDate,
@@ -97,6 +97,13 @@ function App() {
         value: monthNames[nextIndex].toLowerCase(),
       },
     ];
+  };
+  const IconWithLine = () => {
+    return (
+      <span style={{ fontSize: "24px", color: "black", display: "inline-block" }}>
+        ―
+      </span>
+    );
   };
   function getWednesdaysInMonth(monthYear) {
     const [monthStr, yearStr] = monthYear.split("/");
@@ -1175,99 +1182,172 @@ function App() {
                           </div>
                           <div>
                             <p className="font-semibold">Referrals</p>
-                            <p className="flex items-center gap-1">
-                              RGO:
-                              <p className="pr-2">{formData.rgo}</p>
-                              <span className="flex items-center gap-1">
-                                {selectedMember?.currentMonth?.rgo >
-                                  selectedMember?.previousMonth?.rgo ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.rgo,
-                                  selectedMember?.previousMonth?.rgo
-                                )}
-                              </span>
-                            </p>
 
-                            <p className="flex items-center gap-1">
-                              RGI:
-                              <p className="pr-2">{formData.rgi}</p>
-                              <span className="flex items-center gap-1">
-                                {selectedMember?.currentMonth?.rgi >
-                                  selectedMember?.previousMonth?.rgi ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.rgi,
-                                  selectedMember?.previousMonth?.rgi
-                                )}
-                              </span>
-                            </p>
-                          </div>
+                            {selectedMember?.currentMonth?.rgo != selectedMember?.previousMonth?.rgo &&
 
-                          <div>
-                            <p className="font-semibold">1-2-1s</p>
-                            <div className="flex items-center">
 
-                              <p className="pr-2">{formData.one2ones}</p>
-
-                              <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.oneToOnes >
-                                  selectedMember?.previousMonth?.oneToOnes ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}{" "}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.oneToOnes,
-                                  selectedMember?.previousMonth?.oneToOnes
-                                )}
+                              <p className="flex items-center gap-1">
+                                RGO:
+                                <p className="pr-2">{formData.rgo}</p>
+                                <span className="flex items-center gap-1">
+                                  {selectedMember?.currentMonth?.rgo >
+                                    selectedMember?.previousMonth?.rgo ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}
+                                  {substractReading(
+                                    selectedMember?.currentMonth?.rgo,
+                                    selectedMember?.previousMonth?.rgo
+                                  )}
+                                </span>
                               </p>
-                            </div>
+                            }
+
+                            {selectedMember?.currentMonth?.rgo == selectedMember?.previousMonth?.rgo &&
+
+
+                              <p className="flex items-center gap-1">
+                                RGO:
+                                <p className="pr-2">{formData.rgo}</p>
+                                <span className="flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.previousMonth?.rgo}
+                                </span>
+                              </p>
+                            }
+                            {selectedMember?.currentMonth?.rgi != selectedMember?.previousMonth?.rgi &&
+                              <p className="flex items-center gap-1">
+                                RGI:
+                                <p className="pr-2">{formData.rgi}</p>
+                                <span className="flex items-center gap-1">
+                                  {selectedMember?.currentMonth?.rgi >
+                                    selectedMember?.previousMonth?.rgi ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}
+                                  {substractReading(
+                                    selectedMember?.currentMonth?.rgi,
+                                    selectedMember?.previousMonth?.rgi
+                                  )}
+                                </span>
+                              </p>
+                            }
+                            {selectedMember?.currentMonth?.rgi == selectedMember?.previousMonth?.rgi &&
+
+
+                              <p className="flex items-center gap-1">
+                                RGI:
+                                <p className="pr-2">{formData.rgi}</p>
+                                <span className="flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.previousMonth?.rgi}
+                                </span>
+                              </p>
+                            }
                           </div>
 
-                          <div>
-                            <p className="font-semibold">CEUs</p>
-                            <div className="flex items-center">
-                              <p className="pr-2">{formData.ceus}</p>
-                              <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.ceu >
-                                  selectedMember?.previousMonth?.ceu ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}{" "}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.ceu,
-                                  selectedMember?.previousMonth?.ceu
-                                )}
-                              </p>
-                            </div>
-                          </div>
+                          {selectedMember?.currentMonth?.oneToOnes != selectedMember?.previousMonth?.oneToOnes &&
+                            <div>
+                              <p className="font-semibold">1-2-1s</p>
+                              <div className="flex items-center">
 
-                          <div>
-                            <p className="font-semibold">Visitors</p>
-                            <div className="flex items-center">
-                              <p className="pr-2">{formData.visitors}</p>
-                              <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.visitors >
-                                  selectedMember?.previousMonth?.visitors ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}{" "}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.visitors,
-                                  selectedMember?.previousMonth?.visitors
-                                )}
-                              </p>
-                            </div>
-                          </div>
+                                <p className="pr-2">{formData.one2ones}</p>
+
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  {selectedMember?.currentMonth?.oneToOnes >
+                                    selectedMember?.previousMonth?.oneToOnes ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}{" "}
+                                  {substractReading(
+                                    selectedMember?.currentMonth?.oneToOnes,
+                                    selectedMember?.previousMonth?.oneToOnes
+                                  )}
+                                </p>
+                              </div>
+                            </div>}
+
+                          {selectedMember?.currentMonth?.oneToOnes == selectedMember?.previousMonth?.oneToOnes &&
+                            <div>
+                              <p className="font-semibold">1-2-1s</p>
+                              <div className="flex items-center">
+
+                                <p className="pr-2">{formData.one2ones}</p>
+
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  <IconWithLine />
+                                  {
+                                    selectedMember?.previousMonth?.oneToOnes
+                                  }
+                                </p>
+                              </div>
+                            </div>}
+
+                          {selectedMember?.currentMonth?.ceu != selectedMember?.previousMonth?.ceu &&
+                            <div>
+                              <p className="font-semibold">CEUs</p>
+                              <div className="flex items-center">
+                                <p className="pr-2">{formData.ceus}</p>
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  {selectedMember?.currentMonth?.ceu >
+                                    selectedMember?.previousMonth?.ceu ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}{" "}
+                                  {substractReading(
+                                    selectedMember?.currentMonth?.ceu,
+                                    selectedMember?.previousMonth?.ceu
+                                  )}
+                                </p>
+                              </div>
+                            </div>}
+                          {selectedMember?.currentMonth?.ceu == selectedMember?.previousMonth?.ceu &&
+                            <div>
+                              <p className="font-semibold">CEUs</p>
+                              <div className="flex items-center">
+                                <p className="pr-2">{formData.ceus}</p>
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.previousMonth?.ceu}
+
+                                </p>
+                              </div>
+                            </div>}
+
+                          {selectedMember?.currentMonth?.visitors != selectedMember?.previousMonth?.visitors &&
+                            <div>
+                              <p className="font-semibold">Visitors</p>
+                              <div className="flex items-center">
+                                <p className="pr-2">{formData.visitors}</p>
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  {selectedMember?.currentMonth?.visitors >
+                                    selectedMember?.previousMonth?.visitors ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}{" "}
+                                  {substractReading(
+                                    selectedMember?.currentMonth?.visitors,
+                                    selectedMember?.previousMonth?.visitors
+                                  )}
+                                </p>
+                              </div>
+                            </div>}
+                          {selectedMember?.currentMonth?.visitors == selectedMember?.previousMonth?.visitors &&
+                            <div>
+                              <p className="font-semibold">Visitors</p>
+                              <div className="flex items-center">
+                                <p className="pr-2">{formData.visitors}</p>
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.previousMonth?.visitors}
+                                </p>
+                              </div>
+                            </div>}
                         </div>
                       </div>
 
@@ -1489,111 +1569,168 @@ function App() {
 
                           <div>
                             <p className="font-semibold">Referrals</p>
-                            <p className="flex items-center gap-1">
-                              RGO:
-                              <p className="pr-2">{formData.rgo}</p>
-                              <span
-                                className={
-                                  selectedMember?.currentMonth?.rgo >
-                                    selectedMember?.previousMonth?.rgo
-                                    ? "text-green-600 flex items-center gap-1"
-                                    : "text-red-600 flex items-center gap-1"
-                                }
-                              >
-                                {selectedMember?.currentMonth?.rgo >
-                                  selectedMember?.previousMonth?.rgo ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.rgo,
-                                  selectedMember?.previousMonth?.rgo
-                                )}
-                              </span>
-                            </p>
 
-                            <p className="flex items-center gap-1">
-                              RGI:
-                              <p className="pr-2">{formData.rgi}</p>
-                              <span
-                                className={
-                                  selectedMember?.currentMonth?.rgi >
-                                    selectedMember?.previousMonth?.rgi
-                                    ? "text-green-600 flex items-center gap-1"
-                                    : "text-red-600 flex items-center gap-1"
-                                }
-                              >
-                                {selectedMember?.currentMonth?.rgi >
-                                  selectedMember?.previousMonth?.rgi ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.rgi,
-                                  selectedMember?.previousMonth?.rgi
-                                )}
-                              </span>
-                            </p>
+                            {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo != selectedMember?.currentMonth?.rgo
+                              &&
+                              <p className="flex items-center gap-1">
+                                RGO:
+                                <p className="pr-2">{formData.rgo}</p>
+                                <span
+                                  className=" flex items-center gap-1"
+                                >
+                                  {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo >
+                                    selectedMember?.currentMonth?.rgo ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}
+                                  {substractReading(
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo,
+                                    selectedMember?.currentMonth?.rgo
+                                  )}
+                                </span>
+                              </p>
+                            }
+
+                            {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo == selectedMember?.currentMonth?.rgo
+                              &&
+                              <p className="flex items-center gap-1">
+                                RGO:
+                                <p className="pr-2">{formData.rgo}</p>
+                                <span
+                                  className="flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.currentMonth?.rgo}
+                                </span>
+                              </p>
+                            }
+
+                            {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi != selectedMember?.currentMonth?.rgi &&
+                              <p className="flex items-center gap-1">
+                                RGI:
+                                <p className="pr-2">{formData.rgi}</p>
+                                <span
+                                  className="flex items-center gap-1"
+                                >
+                                  {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi >
+                                    selectedMember?.currentMonth?.rgi ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}
+                                  {substractReading(
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi,
+                                    selectedMember?.currentMonth?.rgi
+                                  )}
+                                </span>
+                              </p>}
+
+                            {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi == selectedMember?.currentMonth?.rgi &&
+                              <p className="flex items-center gap-1">
+                                RGI:
+                                <p className="pr-2">{formData.rgi}</p>
+                                <span
+                                  className="flex items-center gap-1"
+                                >
+                                  <IconWithLine />
+                                  {selectedMember?.currentMonth?.rgi}
+                                </span>
+                              </p>}
                           </div>
 
-                          <div>
+                          {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone != selectedMember?.currentMonth?.oneToOnes && <div>
                             <p className="font-semibold">1-2-1s</p>
                             <div className="flex items-center">
                               <p className="pr-2">{formData.one2ones}</p>
                               <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.oneToOnes >
-                                  selectedMember?.previousMonth?.oneToOnes ? (
+                                {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone >
+                                  selectedMember?.currentMonth?.oneToOnes ? (
                                   <FaArrowUp color="#3CCB3A" />
                                 ) : (
                                   <FaArrowDown color="#C0192A" />
                                 )}{" "}
                                 {substractReading(
-                                  selectedMember?.currentMonth?.oneToOnes,
-                                  selectedMember?.previousMonth?.oneToOnes
+                                  selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone,
+                                  selectedMember?.currentMonth?.oneToOnes
                                 )}
                               </p>
                             </div>
-                          </div>
+                          </div>}
 
-                          <div>
-                            <p className="font-semibold">CEUs</p>
+                          {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone == selectedMember?.currentMonth?.oneToOnes && <div>
+                            <p className="font-semibold">1-2-1s</p>
                             <div className="flex items-center">
-                              <p className="pr-2">{formData.ceus}</p>
+                              <p className="pr-2">{formData.one2ones}</p>
                               <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.ceu >
-                                  selectedMember?.previousMonth?.ceu ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}{" "}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.ceu,
-                                  selectedMember?.previousMonth?.ceu
-                                )}
+                                <IconWithLine />
+                                {selectedMember?.currentMonth?.oneToOnes}
                               </p>
                             </div>
-                          </div>
+                          </div>}
 
-                          <div>
-                            <p className="font-semibold">Visitors</p>
-                            <div className="flex items-center">
-                              <p className="pr-2">{formData.visitors}</p>
-                              <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.visitors >
-                                  selectedMember?.previousMonth?.visitors ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}{" "}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.visitors,
-                                  selectedMember?.previousMonth?.visitors
-                                )}
-                              </p>
-                            </div>
-                          </div>
+                          {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus != selectedMember?.currentMonth?.ceu &&
+                            <div>
+                              <p className="font-semibold">CEUs</p>
+                              <div className="flex items-center">
+                                <p className="pr-2">{formData.ceus}</p>
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus >
+                                    selectedMember?.currentMonth?.ceu ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}{" "}
+                                  {substractReading(
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus,
+                                    selectedMember?.currentMonth?.ceu
+                                  )}
+                                </p>
+                              </div>
+                            </div>}
+
+                          {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus == selectedMember?.currentMonth?.ceu &&
+                            <div>
+                              <p className="font-semibold">CEUs</p>
+                              <div className="flex items-center">
+                                <p className="pr-2">{formData.ceus}</p>
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.currentMonth?.ceu}
+                                </p>
+                              </div>
+                            </div>}
+
+                          {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors != selectedMember?.currentMonth?.visitors &&
+                            <div>
+                              <p className="font-semibold">Visitors</p>
+                              <div className="flex items-center">
+                                <p className="pr-2">{formData.visitors}</p>
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors >
+                                    selectedMember?.currentMonth?.visitors ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}{" "}
+                                  {substractReading(
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors,
+                                    selectedMember?.currentMonth?.visitors
+                                  )}
+                                </p>
+                              </div>
+                            </div>}
+
+                          {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors == selectedMember?.currentMonth?.visitors &&
+                            <div>
+                              <p className="font-semibold">Visitors</p>
+                              <div className="flex items-center">
+                                <p className="pr-2">{formData.visitors}</p>
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.currentMonth?.visitors}
+                                </p>
+                              </div>
+                            </div>}
                         </div>
                       </div>
 
@@ -1841,28 +1978,33 @@ function App() {
                             <p className="font-semibold">Referrals</p>
 
                             {formData.projections !== "Custom" && (
+
                               <p className="flex items-center gap-1">
                                 RGO:
                                 <p className="pr-2">{formData.rgo}</p>
-                                <span
-                                  className={
-                                    selectedMember?.currentMonth?.rgo >
-                                      selectedMember?.previousMonth?.rgo
-                                      ? "text-green-600 flex items-center gap-1"
-                                      : "text-red-600 flex items-center gap-1"
-                                  }
-                                >
-                                  {selectedMember?.currentMonth?.rgo >
-                                    selectedMember?.previousMonth?.rgo ? (
-                                    <FaArrowUp color="#3CCB3A" />
-                                  ) : (
-                                    <FaArrowDown color="#C0192A" />
-                                  )}
-                                  {substractReading(
-                                    selectedMember?.currentMonth?.rgo,
-                                    selectedMember?.previousMonth?.rgo
-                                  )}
-                                </span>
+                                {formData.rgo != selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo &&
+                                  <span
+                                    className="flex items-center gap-1"
+                                  >
+                                    {formData.rgo >
+                                      selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo ? (
+                                      <FaArrowUp color="#3CCB3A" />
+                                    ) : (
+                                      <FaArrowDown color="#C0192A" />
+                                    )}
+                                    {substractReading(
+                                      formData.rgo,
+                                      selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo
+                                    )}
+                                  </span>}
+
+                                {formData.rgo == selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo &&
+                                  <span
+                                    className="flex items-center gap-1"
+                                  >
+                                    <IconWithLine />
+                                    {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo}
+                                  </span>}
                               </p>
                             )}
                             {formData.projections === "Custom" && (
@@ -1883,25 +2025,32 @@ function App() {
                                   {formData.projections != "Custom" && (
                                     <p className="pr-2">{formData.rgo}</p>
                                   )}
-                                  <p
-                                    className={
-                                      selectedMember?.currentMonth?.rgo >
-                                        selectedMember?.previousMonth?.rgo
-                                        ? "text-green-600 flex items-center gap-1"
-                                        : "text-red-600 flex items-center gap-1"
-                                    }
-                                  >
-                                    {selectedMember?.currentMonth?.rgo >
-                                      selectedMember?.previousMonth?.rgo ? (
-                                      <FaArrowUp color="#3CCB3A" />
-                                    ) : (
-                                      <FaArrowDown color="#C0192A" />
-                                    )}
-                                    {substractReading(
-                                      selectedMember?.currentMonth?.rgo,
-                                      selectedMember?.previousMonth?.rgo
-                                    )}
-                                  </p>
+
+                                  {formData.rgo != selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo &&
+                                    <p
+                                      className="flex items-center gap-1"
+                                    >
+                                      {formData.rgo >
+                                        selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo ? (
+                                        <FaArrowUp color="#3CCB3A" />
+                                      ) : (
+                                        <FaArrowDown color="#C0192A" />
+                                      )}
+                                      {substractReading(
+                                        formData.rgo,
+                                        selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo
+                                      )}
+                                    </p>}
+
+                                  {formData.rgo == selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo &&
+                                    <p
+                                      className="flex items-center gap-1"
+                                    >
+                                      <IconWithLine />
+                                      {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgo}
+                                    </p>}
+
+
                                 </div>
                               </>
                             )}
@@ -1910,25 +2059,28 @@ function App() {
                                 <p className="flex items-center gap-1">
                                   RGO:
                                   <p className="pr-2">{formData.rgi}</p>
-                                  <span
-                                    className={
-                                      selectedMember?.currentMonth?.rgi >
-                                        selectedMember?.previousMonth?.rgi
-                                        ? "text-green-600 flex items-center gap-1"
-                                        : "text-red-600 flex items-center gap-1"
-                                    }
-                                  >
-                                    {selectedMember?.currentMonth?.rgi >
-                                      selectedMember?.previousMonth?.rgi ? (
-                                      <FaArrowUp color="#3CCB3A" />
-                                    ) : (
-                                      <FaArrowDown color="#C0192A" />
-                                    )}
-                                    {substractReading(
-                                      selectedMember?.currentMonth?.rgi,
-                                      selectedMember?.previousMonth?.rgi
-                                    )}
-                                  </span>
+                                  {formData.rgi != selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi &&
+                                    <span
+                                      className="flex items-center gap-1"
+                                    >
+                                      {formData.rgi >
+                                        selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi ? (
+                                        <FaArrowUp color="#3CCB3A" />
+                                      ) : (
+                                        <FaArrowDown color="#C0192A" />
+                                      )}
+                                      {substractReading(
+                                        formData.rgi,
+                                        selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi
+                                      )}
+                                    </span>}
+                                  {formData.rgi == selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi &&
+                                    <span
+                                      className="flex items-center gap-1"
+                                    >
+                                      <IconWithLine />
+                                      {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi}
+                                    </span>}
                                 </p>
                               )}
                               {formData.projections === "Custom" && (
@@ -1949,25 +2101,30 @@ function App() {
                                     {formData.projections != "Custom" && (
                                       <p className="pr-2">{formData.rgi}</p>
                                     )}
-                                    <p
-                                      className={
-                                        selectedMember?.currentMonth?.rgi >
-                                          selectedMember?.previousMonth?.rgi
-                                          ? "text-green-600 flex items-center gap-1"
-                                          : "text-red-600 flex items-center gap-1"
-                                      }
-                                    >
-                                      {selectedMember?.currentMonth?.rgi >
-                                        selectedMember?.previousMonth?.rgi ? (
-                                        <FaArrowUp color="#3CCB3A" />
-                                      ) : (
-                                        <FaArrowDown color="#C0192A" />
-                                      )}
-                                      {substractReading(
-                                        selectedMember?.currentMonth?.rgi,
-                                        selectedMember?.previousMonth?.rgi
-                                      )}
-                                    </p>
+
+                                    {formData.rgi != selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi &&
+                                      <p
+                                        className="flex items-center gap-1"
+                                      >
+                                        {formData.rgi >
+                                          selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi ? (
+                                          <FaArrowUp color="#3CCB3A" />
+                                        ) : (
+                                          <FaArrowDown color="#C0192A" />
+                                        )}
+                                        {substractReading(
+                                          formData.rgi,
+                                          selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi
+                                        )}
+                                      </p>}
+
+                                    {formData.rgi == selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi &&
+                                      <p
+                                        className="flex items-center gap-1"
+                                      >
+                                        <IconWithLine />
+                                        {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.rgi}
+                                      </p>}
                                   </div>
                                 </>
                               )}
@@ -1988,18 +2145,27 @@ function App() {
                                   readOnly={editable}
                                 />}
                               {formData.projections !== 'Custom' && <p className="pr-2">{formData.one2ones}</p>}
-                              <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.oneToOnes >
-                                  selectedMember?.previousMonth?.oneToOnes ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}{" "}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.oneToOnes,
-                                  selectedMember?.previousMonth?.oneToOnes
-                                )}
-                              </p>
+                              {formData.oneToOnes != selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone &&
+
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  {formData.oneToOnes >
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}{" "}
+                                  {substractReading(
+                                    formData.oneToOnes,
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone
+                                  )}
+                                </p>}
+
+                              {formData.oneToOnes == selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone &&
+
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.onetoone}
+                                </p>}
                             </div>
                           </div>
 
@@ -2017,18 +2183,25 @@ function App() {
                                   readOnly={editable}
                                 />}
                               {formData.projections !== 'Custom' && <p className="pr-2">{formData.ceus}</p>}
-                              <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.ceu >
-                                  selectedMember?.previousMonth?.ceu ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}{" "}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.ceu,
-                                  selectedMember?.previousMonth?.ceu
-                                )}
-                              </p>
+                              {formData.ceu != selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus &&
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  {formData.ceu >
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}{" "}
+                                  {substractReading(
+                                    formData.ceu,
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus
+                                  )}
+                                </p>}
+
+                              {formData.ceu == selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus &&
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.ceus}
+                                </p>}
                             </div>
                           </div>
 
@@ -2046,18 +2219,25 @@ function App() {
                                   readOnly={editable}
                                 />}
                               {formData.projections !== 'Custom' && <p className="pr-2">{formData.visitors}</p>}
-                              <p className="whitespace-nowrap flex items-center gap-1">
-                                {selectedMember?.currentMonth?.visitors >
-                                  selectedMember?.previousMonth?.visitors ? (
-                                  <FaArrowUp color="#3CCB3A" />
-                                ) : (
-                                  <FaArrowDown color="#C0192A" />
-                                )}{" "}
-                                {substractReading(
-                                  selectedMember?.currentMonth?.visitors,
-                                  selectedMember?.previousMonth?.visitors
-                                )}
-                              </p>
+                              {formData.visitors != selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors &&
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  {formData.visitors >
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors ? (
+                                    <FaArrowUp color="#3CCB3A" />
+                                  ) : (
+                                    <FaArrowDown color="#C0192A" />
+                                  )}{" "}
+                                  {substractReading(
+                                    formData.visitors,
+                                    selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors
+                                  )}
+                                </p>}
+
+                              {formData.visitors == selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors &&
+                                <p className="whitespace-nowrap flex items-center gap-1">
+                                  <IconWithLine />
+                                  {selectedMember?.improvementsExtraSheet.last_month_extra_sheet?.visitors}
+                                </p>}
                             </div>
                           </div>
                         </div>
