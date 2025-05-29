@@ -172,7 +172,27 @@ function App() {
     if (meetingsPerWeek >= 0.25) return 5;
     return 0;
   };
+  // Get current level
+  const getCurrentLevel = (score) => {
+    if (score >= 70) return 4; // Green
+    if (score >= 50) return 3; // Yellow
+    if (score >= 30) return 2; // Red
+    return 1; // Grey
+  };
 
+  const getLevelName = (level) => {
+    switch (level) {
+      case 4: return 'Green';
+      case 3: return 'Yellow';
+      case 2: return 'Red';
+      default: return 'Grey';
+    }
+  };
+
+  const getLevelColor = (level) => {
+    var level = getCurrentLevel(totalScoreCustom);
+    return getLevelName(level)
+  };
   const getCEUPoints = (ceuPerWeek) => {
     if (ceuPerWeek >= 1) return 20;
     if (ceuPerWeek >= 0.75) return 15;
@@ -288,7 +308,6 @@ function App() {
     }
   };
   const handleChange = async (event) => {
-    alert('handleChange')
     const value = event.target.value;
 
     var statusOfMonth = availableMonths.filter((item) => item.value == selectedMonth);
@@ -329,6 +348,7 @@ function App() {
               ceus: element.improvementsExtraSheet.last_month_extra_sheet.ceus,
               visitors: element.improvementsExtraSheet.last_month_extra_sheet.visitors,
             }));
+            calculateCustomScore("present", element, '');
           }
           if (statusOfMonth[0].status == 'future') {
             calculateCustomScore("future", element, '');
@@ -379,59 +399,6 @@ function App() {
 
   const handleChangeFormdata = (e) => {
     const { name, value, type } = e.target;
-    // if (returnStatus() != 'future') {
-    //   alert('handleChangeFormdata not future')
-    //   const { name, value, type } = e.target;
-    //   setFormData((prevState) => ({
-    //     ...prevState,
-    //     [name]: type === "number" ? parseInt(value || "0") : value,
-    //   }));
-
-    //   if (value == "Custom") {
-    //     setActiveTabProjections(value);
-    //     setEditable(false);
-    //   }
-    //   if (value == "Next Level") {
-    //     setActiveTabProjections(value);
-    //     setEditable(true);
-    //     setFormData({
-    //       projections: "Next Level",
-    //       present: selectedMember.improvementsExtraSheet.toNextLevel.attendance,
-    //       late: 0,
-    //       substitutes: 0,
-    //       medical: 0,
-    //       rgo: 0,
-    //       rgi: selectedMember.improvementsExtraSheet.toNextLevel.referrals,
-    //       one2ones: selectedMember.improvementsExtraSheet.toNextLevel.oneToOnes,
-    //       ceus: selectedMember.improvementsExtraSheet.toNextLevel.ceus,
-    //       visitors: selectedMember.improvementsExtraSheet.toNextLevel.visitors,
-    //     });
-    //     setTotalScoreCustom(
-    //       Number(selectedMember.improvementsExtraSheet.pointsToNextLevel) +
-    //       Number(selectedMember.currentScore)
-    //     );
-    //   }
-    //   if (value == "Green") {
-    //     setActiveTabProjections(value);
-    //     setEditable(true);
-    //     setFormData({
-    //       projections: "Green",
-    //       present: selectedMember.improvementsExtraSheet.toGreen.attendance,
-    //       late: 0,
-    //       substitutes: 0,
-    //       medical: 0,
-    //       rgo: 0,
-    //       rgi: selectedMember.improvementsExtraSheet.toGreen.referrals,
-    //       one2ones: selectedMember.improvementsExtraSheet.toGreen.oneToOnes,
-    //       ceus: selectedMember.improvementsExtraSheet.toGreen.ceus,
-    //       visitors: selectedMember.improvementsExtraSheet.toGreen.visitors,
-    //     });
-    //   }
-    //   if (value == "Maximum") {
-    //     setActiveTabProjections(value);
-    //     setEditable(true);
-    //   }
-    // }
     if (returnStatus() == 'future') {
 
       if (value == 'Next Level') {
@@ -898,7 +865,6 @@ function App() {
   };
   const changeMonth = (monthValue, listMonths, selcted_member) => {
 
-
     var all_months;
     var member;
     if (listMonths) {
@@ -1107,17 +1073,17 @@ function App() {
                   {Math.floor(totalScoreCustom)} Score
                 </div>
                 <div className="text-[14px] text-black">       {Math.floor(totalScoreCustom)}</div>
-                {selectedMember.levelName == 'Yellow' &&
+                {getLevelColor() == 'Yellow' &&
 
                   <div className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
                 }
-                {selectedMember.levelName == 'Green' &&
+                {getLevelColor() == 'Green' &&
                   <div className="flex items-center justify-center w-3 h-3 rounded-full bg-green-400 text-xs font-bold text-gray-800"></div>
                 }
-                {selectedMember.levelName == 'Gray' &&
+                {getLevelColor() == 'Gray' &&
                   <div className="flex items-center justify-center w-3 h-3 rounded-full bg-gray-400 text-xs font-bold text-gray-800"></div>
                 }
-                {selectedMember.levelName == 'Red' &&
+                {getLevelColor() == 'Red' &&
                   <div className="flex items-center justify-center w-3 h-3 rounded-full bg-red-400 text-xs font-bold text-gray-800"></div>
                 }
 
@@ -1165,17 +1131,17 @@ function App() {
                             {/* <span className="w-3 h-3 rounded-full bg-yellow-400"></span> */}
 
 
-                            {selectedMember.levelName == 'Yellow' &&
+                            {getLevelColor() == 'Yellow' &&
 
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
                             }
-                            {selectedMember.levelName == 'Green' &&
+                            {getLevelColor() == 'Green' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-green-400 text-xs font-bold text-gray-800"></span>
                             }
-                            {selectedMember.levelName == 'Gray' &&
+                            {getLevelColor() == 'Gray' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-gray-400 text-xs font-bold text-gray-800"></span>
                             }
-                            {selectedMember.levelName == 'Red' &&
+                            {getLevelColor() == 'Red' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-red-400 text-xs font-bold text-gray-800"></span>
                             }
                             <span className="text-sm">
@@ -1208,14 +1174,13 @@ function App() {
                               </p>
                             </div>
                           </div>
-
+                          {/* 
                           <div>
                             <p className="font-semibold">Referrals</p>
                             <p className="flex items-center gap-1">RGO:</p>
                             <div className="flex items-center">
 
                               <p className="pr-2">{formData.rgo}</p>
-                              {/* <span className={selectedMember?.currentMonth?.rgo > selectedMember?.previousMonth?.rgo ? "text-green-600" : "text-red-600"}> */}
                               <span className="flex items-center gap-1">
                                 {selectedMember?.currentMonth?.rgo >
                                   selectedMember?.previousMonth?.rgo ? (
@@ -1233,7 +1198,7 @@ function App() {
                             <p className="flex items-center gap-1">RGI:</p>
                             <div className="flex items-center">
                               <p className="pr-2">{formData.rgi}</p>
-                              {/* <span className={selectedMember?.currentMonth?.rgi > selectedMember?.previousMonth?.rgi ? "text-green-600" : "text-red-600"}> */}
+                          
                               <span className="flex items-center gap-1">
                                 {selectedMember?.currentMonth?.rgi >
                                   selectedMember?.previousMonth?.rgi ? (
@@ -1247,6 +1212,57 @@ function App() {
                                 )}
                               </span>
                             </div>
+                          </div> */}
+
+                          <div>
+                            <p className="font-semibold">Referrals</p>
+                            <p className="flex items-center gap-1">
+                              RGO:
+                              <p className="pr-2">{formData.rgo}</p>
+                              <span
+                                className={
+                                  selectedMember?.currentMonth?.rgo >
+                                    selectedMember?.previousMonth?.rgo
+                                    ? "text-green-600 flex items-center gap-1"
+                                    : "text-red-600 flex items-center gap-1"
+                                }
+                              >
+                                {selectedMember?.currentMonth?.rgo >
+                                  selectedMember?.previousMonth?.rgo ? (
+                                  <FaArrowUp color="#3CCB3A" />
+                                ) : (
+                                  <FaArrowDown color="#C0192A" />
+                                )}
+                                {substractReading(
+                                  selectedMember?.currentMonth?.rgo,
+                                  selectedMember?.previousMonth?.rgo
+                                )}
+                              </span>
+                            </p>
+
+                            <p className="flex items-center gap-1">
+                              RGI:
+                              <p className="pr-2">{formData.rgi}</p>
+                              <span
+                                className={
+                                  selectedMember?.currentMonth?.rgi >
+                                    selectedMember?.previousMonth?.rgi
+                                    ? "text-green-600 flex items-center gap-1"
+                                    : "text-red-600 flex items-center gap-1"
+                                }
+                              >
+                                {selectedMember?.currentMonth?.rgi >
+                                  selectedMember?.previousMonth?.rgi ? (
+                                  <FaArrowUp color="#3CCB3A" />
+                                ) : (
+                                  <FaArrowDown color="#C0192A" />
+                                )}
+                                {substractReading(
+                                  selectedMember?.currentMonth?.rgi,
+                                  selectedMember?.previousMonth?.rgi
+                                )}
+                              </span>
+                            </p>
                           </div>
 
                           <div>
@@ -1485,17 +1501,17 @@ function App() {
                           <p className="text-sm text-gray-700">Business Name</p>
                           <p className="text-sm text-gray-500 mt-1">Role(s)</p>
                           <div className="flex items-center gap-2 mt-1">
-                            {selectedMember.levelName == 'Yellow' &&
+                            {getLevelColor() == 'Yellow' &&
 
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
                             }
-                            {selectedMember.levelName == 'Green' &&
+                            {getLevelColor() == 'Green' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-green-400 text-xs font-bold text-gray-800"></span>
                             }
-                            {selectedMember.levelName == 'Gray' &&
+                            {getLevelColor() == 'Gray' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-gray-400 text-xs font-bold text-gray-800"></span>
                             }
-                            {selectedMember.levelName == 'Red' &&
+                            {getLevelColor() == 'Red' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-red-400 text-xs font-bold text-gray-800"></span>
                             }
                             <span className="text-sm">
@@ -1808,17 +1824,17 @@ function App() {
                           <p className="text-sm text-gray-700">Business Name</p>
                           <p className="text-sm text-gray-500 mt-1">Role(s)</p>
                           <div className="flex items-center gap-2 mt-1">
-                            {selectedMember.levelName == 'Yellow' &&
+                            {getLevelColor() == 'Yellow' &&
 
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-yellow-400 text-xs font-bold text-gray-800" />
                             }
-                            {selectedMember.levelName == 'Green' &&
+                            {getLevelColor() == 'Green' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-green-400 text-xs font-bold text-gray-800"></span>
                             }
-                            {selectedMember.levelName == 'Gray' &&
+                            {getLevelColor() == 'Gray' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-gray-400 text-xs font-bold text-gray-800"></span>
                             }
-                            {selectedMember.levelName == 'Red' &&
+                            {getLevelColor() == 'Red' &&
                               <span className="flex items-center justify-center w-3 h-3 rounded-full bg-red-400 text-xs font-bold text-gray-800"></span>
                             }
                             <span className="text-sm">
