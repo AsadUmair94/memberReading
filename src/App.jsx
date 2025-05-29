@@ -643,6 +643,7 @@ function App() {
         ceus: member.improvementsExtraSheet.toGreen.ceus,
         visitors: member.improvementsExtraSheet.toGreen.visitors,
       });
+      alert(member.improvementsExtraSheet.pointsToGreenLevel)
       setTotalScoreCustom(
         Number(member.improvementsExtraSheet.pointsToGreenLevel) +
         Number(member.currentScore)
